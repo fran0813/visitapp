@@ -2,10 +2,16 @@
 
     @extends('layouts.base')
 
+    @section('brand')
+        <a class="navbar-brand" href="{{ url('/') }}">
+            {{ config('app.name', 'VISITAAP') }}
+        </a>
+    @endsection
+
     @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-12"></div>          
+            <div class="col-sm-12 col-md-12 col-lg-12">Referencia</div>          
         </div>
     </div>
     @endsection
