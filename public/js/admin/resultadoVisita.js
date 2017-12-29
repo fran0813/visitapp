@@ -1,7 +1,5 @@
 $(document).ready(function()
 {
-	$("#formResultadoVisita").hide();
-	$("#noContacta").hide();
 	verificar();
 });
 
@@ -49,8 +47,10 @@ function verificar()
 	.done(function(response){
 		if (response.siguienteInformacionAvalista == "true") {
 			verificarInformacion();
+			$("#noContacta").hide();
 			$("#formResultadoVisita").show();
 		} else {
+			$("#siguiente").show();
 			$("#siguiente").html("No se ha ingresado la información del paso anterior");
 		}
 	});
@@ -69,12 +69,13 @@ function verificarInformacion()
 	.done(function(response){
 		if (response.contactaTitular == "si") {
 			$('#si').prop("checked", true);
-		} else if (response.direccionDeMayorContacto == "no") {
+		} else if (response.contactaTitular == "no") {
 			$('#no').prop("checked", true);
+			$("#noContacta").show();
 		}
 		if (response.noContactaTitular == "si") {
 			$('#si2').prop("checked", true);
-		} else if (response.direccionDeMayorContacto == "no") {
+		} else if (response.noContactaTitular == "no") {
 			$('#no2').prop("checked", true);
 		}
 		$("#nombresApellidosVisita").val(response.nombresApellidosVisita);
@@ -98,7 +99,7 @@ function continuar()
 	})
 
 	.done(function(response){
-		// document.location ="/admin/resultadoVisita";
+		document.location ="/admin/acuerdoPago";
 	});
 }
 

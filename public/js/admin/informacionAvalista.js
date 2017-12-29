@@ -1,6 +1,5 @@
 $(document).ready(function()
 {
-	$("#formInformacionAvalista").hide();
 	verificar();
 });
 
@@ -46,6 +45,7 @@ function verificar()
 			verificarInformacion();
 			$("#formInformacionAvalista").show();
 		} else {
+			$("#siguiente").show();
 			$("#siguiente").html("No se ha ingresado la información del paso anterior");
 		}
 	});

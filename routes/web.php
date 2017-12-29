@@ -29,6 +29,8 @@ Route::group(['prefix' => 'admin'], function()
 	Route::get('/informacionReferencia', 'AdminController@informacionReferencia')->middleware('auth');
 	Route::get('/informacionAvalista', 'AdminController@informacionAvalista')->middleware('auth');
 	Route::get('/resultadoVisita', 'AdminController@resultadoVisita')->middleware('auth');
+	Route::get('/acuerdoPago', 'AdminController@acuerdoPago')->middleware('auth');
+	Route::get('/comentarioVisita', 'AdminController@comentarioVisita')->middleware('auth');
 
 	// Guarda la información
 	Route::post('/informacionAgenciaAlmacenar', 'AdminController@informacionAgenciaAlmacenar')->middleware('auth');
@@ -37,6 +39,8 @@ Route::group(['prefix' => 'admin'], function()
 	Route::post('/informacionReferenciaAlmacenar', 'AdminController@informacionReferenciaAlmacenar')->middleware('auth');
 	Route::post('/informacionAvalistaAlmacenar', 'AdminController@informacionAvalistaAlmacenar')->middleware('auth');
 	Route::post('/resultadoVisitaAlmacenar', 'AdminController@resultadoVisitaAlmacenar')->middleware('auth');
+	Route::post('/acuerdoPagoAlmacenar', 'AdminController@acuerdoPagoAlmacenar')->middleware('auth');
+	Route::post('/comentarioVisitaAlmacenar', 'AdminController@comentarioVisitaAlmacenar')->middleware('auth');
 
 	// Información almacenada
 	Route::post('/verificarInformacionAgencia', 'AdminController@verificarInformacionAgencia')->middleware('auth');
@@ -45,6 +49,8 @@ Route::group(['prefix' => 'admin'], function()
 	Route::post('/verificarInformacionReferencia', 'AdminController@verificarInformacionReferencia')->middleware('auth');
 	Route::post('/verificarInformacionAvalista', 'AdminController@verificarInformacionAvalista')->middleware('auth');
 	Route::post('/verificarResultadoVisita', 'AdminController@verificarResultadoVisita')->middleware('auth');
+	Route::post('/verificarAcuerdoPago', 'AdminController@verificarAcuerdoPago')->middleware('auth');
+	Route::post('/verificarComentarioVisita', 'AdminController@verificarComentarioVisita')->middleware('auth');
 
 	// Valida el siguiente paso
 	Route::post('/informacionAgenciaContinuar', 'AdminController@informacionAgenciaContinuar')->middleware('auth');
@@ -53,6 +59,8 @@ Route::group(['prefix' => 'admin'], function()
 	Route::post('/informacionReferenciaContinuar', 'AdminController@informacionReferenciaContinuar')->middleware('auth');
 	Route::post('/informacionAvalistaContinuar', 'AdminController@informacionAvalistaContinuar')->middleware('auth');
 	Route::post('/resultadoVisitaContinuar', 'AdminController@resultadoVisitaContinuar')->middleware('auth');
+	Route::post('/acuerdoPagoContinuar', 'AdminController@acuerdoPagoContinuar')->middleware('auth');
+	Route::post('/comentariosVisitaContinuar', 'AdminController@comentariosVisitaContinuar')->middleware('auth');
 
 	// Validar si es verdadero
 	Route::post('/validarInformacionGeneral', 'AdminController@validarInformacionGeneral')->middleware('auth');
@@ -60,6 +68,12 @@ Route::group(['prefix' => 'admin'], function()
 	Route::post('/validarInformacionReferencia', 'AdminController@validarInformacionReferencia')->middleware('auth');
 	Route::post('/validarInformacionAvalista', 'AdminController@validarInformacionAvalista')->middleware('auth');
 	Route::post('/validarResultadoVisita', 'AdminController@validarResultadoVisita')->middleware('auth');
+	Route::post('/validarResultadoVisita', 'AdminController@validarResultadoVisita')->middleware('auth');
+	Route::post('/validarAcuerdoPago', 'AdminController@validarAcuerdoPago')->middleware('auth');
+	Route::post('/validarComentarioVisita', 'AdminController@validarComentarioVisita')->middleware('auth');
+
+	// Guarda la información
+	Route::post('/guardar', 'AdminController@guardar')->middleware('auth');
 });
 
 Route::group(['prefix' => '/user'], function()

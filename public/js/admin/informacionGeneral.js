@@ -1,6 +1,5 @@
 $(document).ready(function()
 {
-	$("#formInformacionGeneral").hide();
 	verificar();
 });
 
@@ -18,33 +17,46 @@ $("#formInformacionGeneral2").on("submit", function()
 
 $("#formInformacionGeneral3").on("submit", function()
 {
-// 	var codAlivio = $("#codAlivio").val();
-// 	var obligacionN = $("#obligacionN").val();
-// 	var fechaDeDesembolso = $("#fechaDeDesembolso").val();
-// 	var saldoCapital = $("#saldoCapital").val();
-// 	var saldoTotal = $("#saldoTotal").val();
-// 	var etapaSapro = $("#etapaSapro").val();
-// 	var invBienesINIC = $("#invBienesINIC").val();
-// 	var embargo = $("#embargo").val();
+	var codAlivio = $("#codAlivio").val();
+	var obligacionN = $("#obligacionN").val();
+	var fechaDeDesembolso = $("#fechaDeDesembolso").val();
+	var saldoCapital = $("#saldoCapital").val();
+	var saldoTotal = $("#saldoTotal").val();
+	var diasMora = $("#diasMora").val();
+	var VrIntMora = $("#VrIntMora").val();
+	var VrIntCorrientes = $("#VrIntCorrientes").val();
+	var VrSeguros = $("#VrSeguros").val();
+	var VrGac = $("#VrGac").val();
+	var calificacion = $("#calificacion").val();
+	var etapaSapro = $("#etapaSapro").val();
+	var invBienesINIC = $("#invBienesINIC").val();
+	var embargo = $("#embargo").val();
 
-// 	$.ajax({
-// 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-// 		method: "POST",
-// 		url: "/admin/informacionGeneralAlmacenar",
-// 		dataType: 'json',
-// 		data: { codAlivio: codAlivio,
-// 				obligacionN: obligacionN,
-// 				fechaDeDesembolso: fechaDeDesembolso,
-// 				saldoCapital: saldoCapital,
-// 				saldoTotal: saldoTotal,
-// 				etapaSapro: etapaSapro,
-// 				invBienesINIC: invBienesINIC,
-// 				embargo: embargo }
-// 	})
+	$.ajax({
+		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+		method: "POST",
+		url: "/admin/informacionGeneralAlmacenar",
+		dataType: 'json',
+		data: { codAlivio: codAlivio,
+				obligacionN: obligacionN,
+				fechaDeDesembolso: fechaDeDesembolso,
+				saldoCapital: saldoCapital,
+				saldoTotal: saldoTotal,
+				saldoTotal: saldoTotal,
+				diasMora: diasMora,
+				VrIntMora: VrIntMora,
+				VrIntCorrientes: VrIntCorrientes,
+				VrSeguros: VrSeguros,
+				VrGac: VrGac,
+				calificacion: calificacion,
+				etapaSapro: etapaSapro,
+				invBienesINIC: invBienesINIC,
+				embargo: embargo }
+	})
 
-// 	.done(function(response){
-// 		continuar();
-// 	});
+	.done(function(response){
+		continuar();
+	});
 
 	return false;
 });
@@ -62,8 +74,9 @@ function verificar()
 	.done(function(response){
 		if (response.siguienteInformacionAgencia == "true") {
 			verificarInformacion();
-			$("#formInformacionGeneral").show();
+			$("#myCarousel").show();
 		} else {
+			$("#siguiente").show();
 			$("#siguiente").html("No se ha ingresado la información del paso anterior");
 		}
 	});

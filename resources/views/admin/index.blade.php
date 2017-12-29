@@ -2,8 +2,10 @@
 
     @extends('layouts.base')
 
+    @include('admin.section.navbar')
+
     @section('brand')
-        <a class="navbar-brand" href="{{ url('/') }}">
+        <a class="navbar-brand" href="{{ url('/admin/') }}">
             {{ config('app.name', 'VISITAAP') }}
         </a>
     @endsection

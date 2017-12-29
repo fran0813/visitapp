@@ -1,26 +1,33 @@
 $(document).ready(function()
 {
-	$("#formInformacionReferencia").hide();
 	verificar();
 });
 
 $("#formInformacionReferencia").on("submit", function()
 {
+	var referencia = $("#referencia").val();
 	var nombresApellidosReferencia = $("#nombresApellidosReferencia").val();
 	var telefonoReferencia = $("#telefonoReferencia").val();
 
-	$.ajax({
-		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-		method: "POST",
-		url: "/admin/informacionReferenciaAlmacenar",
-		dataType: 'json',
-		data: { nombresApellidosReferencia: nombresApellidosReferencia,
-				telefonoReferencia: telefonoReferencia }
-	})
+	if (referencia == "null") {
+		$("#siguiente").show();
+		$("#siguiente").html("No se ha ingresado la información de referencia");
+	} else {
+		$("#siguiente").hide();
+		$.ajax({
+			headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+			method: "POST",
+			url: "/admin/informacionReferenciaAlmacenar",
+			dataType: 'json',
+			data: { referencia: referencia,
+					nombresApellidosReferencia: nombresApellidosReferencia,
+					telefonoReferencia: telefonoReferencia }
+		})
 
-	.done(function(response){
-		continuar();
-	});
+		.done(function(response){
+			continuar();
+		});
+	}
 
 	return false;
 });
@@ -40,6 +47,7 @@ function verificar()
 			verificarInformacion();
 			$("#formInformacionReferencia").show();
 		} else {
+			$("#siguiente").show();
 			$("#siguiente").html("No se ha ingresado la información del paso anterior");
 		}
 	});
@@ -56,6 +64,7 @@ function verificarInformacion()
 	})
 
 	.done(function(response){
+		$("#referencia option[value="+ response.referencia +"]").attr("selected",true);
 		$("#nombresApellidosReferencia").val(response.nombresApellidosReferencia);
 		$("#telefonoReferencia").val(response.telefonoReferencia);
 	});

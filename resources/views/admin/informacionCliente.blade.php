@@ -1,6 +1,6 @@
 @if(auth()->user()->hasRole('Admin'))
 
-    @extends('layouts.base')
+    @extends('admin.index')
 
     @section('brand')
         <a class="navbar-brand" href="{{ url('/admin/informacionCliente') }}" style="width: 70%; height: 40%;">
@@ -12,13 +12,13 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12">
-                <p id="siguiente"></p>
-                <form id="formInformacionCliente">
+                <p id="siguiente" style="display: none;"></p>
+                <form id="formInformacionCliente" style="display: none; margin-left: 15%; margin-right: 15%;">
                     <label class="control-label" for="nombresApellidos">Nombres y Apellidos</label>
-                    <input type="text" class="form-control" id="nombresApellidos" placeholder="Ingrese nombres y apellidos" required>
+                    <input type="text" class="form-control" id="nombresApellidos" placeholder="Ingrese los nombres y apellidos" required>
                     <label class="control-label" for="documentoIdentificacion">Documento de Identificación</label>
                     <input type="number" class="form-control" id="documentoIdentificacion" placeholder="Ingrese el documento de identificación" required>
-                    <label class="control-label" for="correo">Correo Electronico</label>
+                    <label class="control-label" for="correo">Correo Electrónico</label>
                     <input type="email" class="form-control" id="correo" placeholder="Ingrese el correo" required>
                     <label class="control-label" for="celular">Celular</label>
                     <input type="number" class="form-control" id="celular" placeholder="Ingrese el celular" required>

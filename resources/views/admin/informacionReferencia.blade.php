@@ -1,10 +1,10 @@
 @if(auth()->user()->hasRole('Admin'))
 
-    @extends('layouts.base')
+    @extends('admin.index')
 
     @section('brand')
         <a class="navbar-brand" href="{{ url('/admin/informacionReferencia') }}" style="width: 70%; height: 40%;">
-            Información General de los productos
+            Información Referencia
         </a>
     @endsection
 
@@ -12,8 +12,14 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12">
-                <p id="siguiente"></p>
-                <form id="formInformacionReferencia">
+                <p id="siguiente" style="display: none;"></p>
+                <form id="formInformacionReferencia" style="display: none; margin-left: 15%; margin-right: 15%;">
+                    <label class="control-label" for="#">Referencia</label>
+                    <select id="referencia" class="form-control">
+                        <option value="null">Seleccione la referencia</option>
+                        <option value="personal">Personal</option>
+                        <option value="familiar">Familiar</option>
+                    </select>
                     <label class="control-label" for="nombresApellidosReferencia">Nombres y Apellidos</label>
                     <input type="text" class="form-control" id="nombresApellidosReferencia" placeholder="Ingrese nombres y apellidos" required>
                     <label class="control-label" for="telefonoReferencia">N° de Teléfono</label>

@@ -1,6 +1,6 @@
 @if(auth()->user()->hasRole('Admin'))
 
-    @extends('layouts.base')
+    @extends('admin.index')
 
     @section('brand')
         <a class="navbar-brand" href="{{ url('/admin/resultadoVisita') }}" style="width: 70%; height: 40%;">
@@ -12,8 +12,8 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12">
-                <p id="siguiente"></p>
-                <form id="formResultadoVisita">
+                <p id="siguiente" style="display: none;"></p>
+                <form id="formResultadoVisita" style="display: none; margin-left: 15%; margin-right: 15%;">
                     <label class="control-label" for="#">Se Contacta con el Titular</label>
                     <br>
                     <label class="control-label" for="si">Si</label>                
@@ -44,8 +44,8 @@
                     <input class="form-control" type="number" id="actividadEconomica" placeholder="Ingrese la actividad economica actual del titular" required>
                     <label class="control-label" for="noPago">Motivo del NO PAGO</label>                
                     <input class="form-control" type="text" id="noPago" placeholder="Ingrese el motivo del no pago" required>
-                    <label class="control-label" for="observacionesNoPago">Observaciones Motivo del NO PAGO</label>                
-                    <input class="form-control" type="text" id="observacionesNoPago" placeholder="Ingrese las observaciones del motivo del no pago" required>
+                    <label class="control-label" for="observacionesNoPago">Observaciones Motivo del NO PAGO</label>
+                    <textarea id="observacionesNoPago" class="form-control" rows="3" placeholder="Ingrese las observaciones del motivo del no pago"></textarea>
                     <button type="submit" class="btn btn-success center-block" style="margin-top: 2%;">Continuar</button>
                 </form>
             </div>          

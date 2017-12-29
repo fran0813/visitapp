@@ -44,6 +44,16 @@ class AdminController extends Controller
         return view('admin.resultadoVisita');
     }
 
+    public function acuerdoPago()
+    {
+        return view('admin.acuerdoPago');
+    }
+
+    public function comentarioVisita()
+    {
+        return view('admin.comentarioVisita');
+    }
+
     public function verificarInformacionAgencia(Request $request)
     {
         $nombreDeLaAgencia = null;
@@ -111,6 +121,12 @@ class AdminController extends Controller
         $fechaDeDesembolso = null;
         $saldoCapital = null;
         $saldoTotal = null;
+        $diasMora = null;
+        $VrIntMora = null;
+        $VrIntCorrientes = null;
+        $VrSeguros = null;
+        $VrGac = null;
+        $calificacion = null;
         $etapaSapro = null;
         $invBienesINIC = null;
         $embargo = null;
@@ -120,6 +136,12 @@ class AdminController extends Controller
     		|| $request->session()->get("fechaDeDesembolso")
     		|| $request->session()->get("saldoCapital")
     		|| $request->session()->get("saldoTotal")
+    		|| $request->session()->get("diasMora")
+    		|| $request->session()->get("VrIntMora")
+    		|| $request->session()->get("VrIntCorrientes")
+    		|| $request->session()->get("VrSeguros")
+    		|| $request->session()->get("VrGac")
+    		|| $request->session()->get("calificacion")
     		|| $request->session()->get("etapaSapro")
     		|| $request->session()->get("invBienesINIC")
     		|| $request->session()->get("embargo")
@@ -129,6 +151,12 @@ class AdminController extends Controller
             $fechaDeDesembolso = $request->session()->get("fechaDeDesembolso");
             $saldoCapital = $request->session()->get("saldoCapital");
             $saldoTotal = $request->session()->get("saldoTotal");
+            $diasMora = $request->session()->get("diasMora");
+            $VrIntMora = $request->session()->get("VrIntMora");
+            $VrIntCorrientes = $request->session()->get("VrIntCorrientes");
+            $VrSeguros = $request->session()->get("VrSeguros");
+            $VrGac = $request->session()->get("VrGac");
+            $calificacion = $request->session()->get("calificacion");
             $etapaSapro = $request->session()->get("etapaSapro");
             $invBienesINIC = $request->session()->get("invBienesINIC");
             $embargo = $request->session()->get("embargo");
@@ -139,6 +167,12 @@ class AdminController extends Controller
         							'fechaDeDesembolso' => $fechaDeDesembolso,
         							'saldoCapital' => $saldoCapital,
         							'saldoTotal' => $saldoTotal,
+        							'diasMora' => $diasMora,
+        							'VrIntMora' => $VrIntMora,
+        							'VrIntCorrientes' => $VrIntCorrientes,
+        							'VrSeguros' => $VrSeguros,
+        							'VrGac' => $VrGac,
+        							'calificacion' => $calificacion,
         							'etapaSapro' => $etapaSapro,
         							'invBienesINIC' => $invBienesINIC,
         							'embargo' => $embargo
@@ -152,6 +186,12 @@ class AdminController extends Controller
         $fechaDeDesembolso = $_POST['fechaDeDesembolso'];
         $saldoCapital = $_POST['saldoCapital'];
         $saldoTotal = $_POST['saldoTotal'];
+        $diasMora = $_POST['diasMora'];
+        $VrIntMora = $_POST['VrIntMora'];
+        $VrIntCorrientes = $_POST['VrIntCorrientes'];
+        $VrSeguros = $_POST['VrSeguros'];
+        $VrGac = $_POST['VrGac'];
+        $calificacion = $_POST['calificacion'];
         $etapaSapro = $_POST['etapaSapro'];
         $invBienesINIC = $_POST['invBienesINIC'];
         $embargo = $_POST['embargo'];
@@ -161,6 +201,12 @@ class AdminController extends Controller
         $request->session()->put('fechaDeDesembolso', $fechaDeDesembolso);
         $request->session()->put('saldoCapital', $saldoCapital);
         $request->session()->put('saldoTotal', $saldoTotal);
+        $request->session()->put('diasMora', $diasMora);
+        $request->session()->put('diasMora', $diasMora);
+        $request->session()->put('VrIntMora', $VrIntMora);
+        $request->session()->put('VrIntCorrientes', $VrIntCorrientes);
+        $request->session()->put('VrSeguros', $VrSeguros);
+        $request->session()->put('calificacion', $calificacion);
         $request->session()->put('etapaSapro', $etapaSapro);
         $request->session()->put('invBienesINIC', $invBienesINIC);
         $request->session()->put('embargo', $embargo);
@@ -286,26 +332,32 @@ class AdminController extends Controller
 
     public function verificarInformacionReferencia(Request $request)
     {
+        $referencia = null;
         $nombresApellidosReferencia = null;
 		$telefonoReferencia = null;
 
-        if($request->session()->get("nombresApellidosReferencia")
+        if($request->session()->get("referencia")
+    		|| $request->session()->get("nombresApellidosReferencia")
     		|| $request->session()->get("telefonoReferencia")
     	){
+            $nombresApellidosReferencia = $request->session()->get("referencia");
             $nombresApellidosReferencia = $request->session()->get("nombresApellidosReferencia");
             $telefonoReferencia = $request->session()->get("telefonoReferencia");
         }
 
-        return Response::json(array('nombresApellidosReferencia' => $nombresApellidosReferencia,
+        return Response::json(array('referencia' => $referencia,
+        							'nombresApellidosReferencia' => $nombresApellidosReferencia,
         							'telefonoReferencia' => $telefonoReferencia,
         							));
     }
 
     public function informacionReferenciaAlmacenar(Request $request)
     {
+        $referencia = $_POST['referencia'];
         $nombresApellidosReferencia = $_POST['nombresApellidosReferencia'];
         $telefonoReferencia = $_POST['telefonoReferencia'];
 
+        $request->session()->put('referencia', $referencia);
         $request->session()->put('nombresApellidosReferencia', $nombresApellidosReferencia);
         $request->session()->put('telefonoReferencia', $telefonoReferencia);
 
@@ -465,6 +517,138 @@ class AdminController extends Controller
         $siguienteResultadoVisita = $_POST['siguienteResultadoVisita'];
 
         $request->session()->put('siguienteResultadoVisita', $siguienteResultadoVisita);
+
+        return Response::json(array('html' => 'ok'));
+    }
+
+    public function validarAcuerdoPago(Request $request)
+    {
+        $siguienteResultadoVisita = null;
+
+        if($request->session()->get("siguienteResultadoVisita")){
+            $siguienteResultadoVisita = $request->session()->get("siguienteResultadoVisita");
+        }
+
+        return Response::json(array('siguienteResultadoVisita' => $siguienteResultadoVisita));
+    }
+
+    public function verificarAcuerdoPago(Request $request)
+    {
+		$acuerdo = null;
+		$nDeProducto = null;
+		$fechaCompromiso = null;
+		$vrPromesa = null;
+		$alternativa = null;
+
+        if($request->session()->get("acuerdo")
+            || $request->session()->get("nDeProducto")
+            || $request->session()->get("fechaCompromiso")
+            || $request->session()->get("vrPromesa")
+            || $request->session()->get("alternativa")
+        ){
+            $acuerdo = $request->session()->get("acuerdo");
+            $nDeProducto = $request->session()->get("nDeProducto");
+            $fechaCompromiso = $request->session()->get("fechaCompromiso");
+            $vrPromesa = $request->session()->get("vrPromesa");
+            $alternativa = $request->session()->get("alternativa");
+        }
+
+        return Response::json(array('acuerdo' => $acuerdo,
+                                    'nDeProducto' => $nDeProducto,
+                                    'fechaCompromiso' => $fechaCompromiso,
+                                    'vrPromesa' => $vrPromesa,
+                                    'alternativa' => $alternativa
+                                    ));
+    }
+
+    public function acuerdoPagoAlmacenar(Request $request)
+    {
+        $acuerdo = $_POST['acuerdo'];
+        $nDeProducto = $_POST['nDeProducto'];
+        $fechaCompromiso = $_POST['fechaCompromiso'];
+        $vrPromesa = $_POST['vrPromesa'];
+        $alternativa = $_POST['alternativa'];
+
+        $request->session()->put('acuerdo', $acuerdo);
+        $request->session()->put('nDeProducto', $nDeProducto);
+        $request->session()->put('fechaCompromiso', $fechaCompromiso);
+        $request->session()->put('vrPromesa', $vrPromesa);
+        $request->session()->put('alternativa', $alternativa);
+
+        return Response::json(array('html' => 'ok'));
+    }
+
+    public function acuerdoPagoContinuar(Request $request)
+    {
+        $siguienteAcuerdoPago = $_POST['siguienteAcuerdoPago'];
+
+        $request->session()->put('siguienteAcuerdoPago', $siguienteAcuerdoPago);
+
+        return Response::json(array('html' => 'ok'));
+    }
+
+    public function validarComentarioVisita(Request $request)
+    {
+        $siguienteAcuerdoPago = null;
+
+        if($request->session()->get("siguienteAcuerdoPago")){
+            $siguienteAcuerdoPago = $request->session()->get("siguienteAcuerdoPago");
+        }
+
+        return Response::json(array('siguienteAcuerdoPago' => $siguienteAcuerdoPago));
+    }
+
+    public function verificarComentarioVisita(Request $request)
+    {
+		$acuerdo = null;
+		$nDeProducto = null;
+		$fechaCompromiso = null;
+		$vrPromesa = null;
+		$alternativa = null;
+
+        if($request->session()->get("acuerdo")
+            || $request->session()->get("nDeProducto")
+            || $request->session()->get("fechaCompromiso")
+            || $request->session()->get("vrPromesa")
+            || $request->session()->get("alternativa")
+        ){
+            $acuerdo = $request->session()->get("acuerdo");
+            $nDeProducto = $request->session()->get("nDeProducto");
+            $fechaCompromiso = $request->session()->get("fechaCompromiso");
+            $vrPromesa = $request->session()->get("vrPromesa");
+            $alternativa = $request->session()->get("alternativa");
+        }
+
+        return Response::json(array('acuerdo' => $acuerdo,
+                                    'nDeProducto' => $nDeProducto,
+                                    'fechaCompromiso' => $fechaCompromiso,
+                                    'vrPromesa' => $vrPromesa,
+                                    'alternativa' => $alternativa
+                                    ));
+    }
+
+    public function comentarioVisitaAlmacenar(Request $request)
+    {
+        $acuerdo = $_POST['acuerdo'];
+        $nDeProducto = $_POST['nDeProducto'];
+        $fechaCompromiso = $_POST['fechaCompromiso'];
+        $vrPromesa = $_POST['vrPromesa'];
+        $alternativa = $_POST['alternativa'];
+
+        $request->session()->put('acuerdo', $acuerdo);
+        $request->session()->put('nDeProducto', $nDeProducto);
+        $request->session()->put('fechaCompromiso', $fechaCompromiso);
+        $request->session()->put('vrPromesa', $vrPromesa);
+        $request->session()->put('alternativa', $alternativa);
+
+        return Response::json(array('html' => 'ok'));
+    }
+
+    public function comentarioVisitaContinuar(Request $request)
+    {
+        $siguienteComentarioVisita = $_POST['siguienteComentarioVisita'];
+
+        $request->session()->put('siguienteComentarioVisita', $siguienteComentarioVisita);
 
         return Response::json(array('html' => 'ok'));
     }

@@ -1,6 +1,6 @@
 @if(auth()->user()->hasRole('Admin'))
 
-    @extends('layouts.base')
+    @extends('admin.index')
 
     @section('brand')
         <a class="navbar-brand" href="{{ url('/admin/informacionAgencia') }}" style="width: 70%; height: 40%;">
@@ -12,7 +12,8 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12">
-                <form id="formInformacionAgencia">
+                <p id="siguiente" style="display: none;"></p>
+                <form id="formInformacionAgencia" style="margin-left: 15%; margin-right: 15%;">
                     <label class="control-label" for="nombreDeLaAgencia">Nombre de la agencia externa</label>
                     <input type="text" class="form-control" id="nombreDeLaAgencia" placeholder="Ingrese la agencia" required>
                     <label class="control-label" for="franja">Franja</label>
