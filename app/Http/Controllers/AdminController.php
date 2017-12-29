@@ -404,59 +404,67 @@ class AdminController extends Controller
 
     public function verificarResultadoVisita(Request $request)
     {
-        $codigoGarantia = null;
-		$nombresApellidosAvalista = null;
-		$telefonoAvalista = null;
-		$ocupacion = null;
-		$observacion = null;
+        $contactaTitular = null;
+        $noContactaTitular = null;
+        $nombresApellidosVisita = null;
+        $parentesco = null;
+        $actividadEconomica = null;
+        $noPago = null;
+        $observacionesNoPago = null;
 
-        if($request->session()->get("codigoGarantia")
-    		|| $request->session()->get("nombresApellidosAvalista")
-    		|| $request->session()->get("telefonoAvalista")
-    		|| $request->session()->get("ocupacion")
-    		|| $request->session()->get("observacion")
-    	){
-            $codigoGarantia = $request->session()->get("codigoGarantia");
-            $nombresApellidosAvalista = $request->session()->get("nombresApellidosAvalista");
-            $telefonoAvalista = $request->session()->get("telefonoAvalista");
-            $ocupacion = $request->session()->get("ocupacion");
-            $observacion = $request->session()->get("observacion");
+        if($request->session()->get("contactaTitular")
+            || $request->session()->get("noContactaTitular")
+            || $request->session()->get("nombresApellidosVisita")
+            || $request->session()->get("parentesco")
+            || $request->session()->get("actividadEconomica")
+            || $request->session()->get("noPago")
+            || $request->session()->get("observacionesNoPago")
+        ){
+            $contactaTitular = $request->session()->get("contactaTitular");
+            $noContactaTitular = $request->session()->get("noContactaTitular");
+            $nombresApellidosVisita = $request->session()->get("nombresApellidosVisita");
+            $parentesco = $request->session()->get("parentesco");
+            $actividadEconomica = $request->session()->get("actividadEconomica");
+            $noPago = $request->session()->get("noPago");
+            $observacionesNoPago = $request->session()->get("observacionesNoPago");
         }
 
-        return Response::json(array('codigoGarantia' => $codigoGarantia,
-        							'nombresApellidosAvalista' => $nombresApellidosAvalista,
-        							'telefonoAvalista' => $telefonoAvalista,
-        							'ocupacion' => $ocupacion,
-        							'observacion' => $observacion
-        							));
+        return Response::json(array('contactaTitular' => $contactaTitular,
+                                    'noContactaTitular' => $noContactaTitular,
+                                    'nombresApellidosVisita' => $nombresApellidosVisita,
+                                    'parentesco' => $parentesco,
+                                    'actividadEconomica' => $actividadEconomica,
+                                    'noPago' => $noPago,
+                                    'observacionesNoPago' => $observacionesNoPago
+                                    ));
     }
 
     public function resultadoVisitaAlmacenar(Request $request)
     {
-        $codigoGarantia = $_POST['codigoGarantia'];
-        $nombresApellidosAvalista = $_POST['nombresApellidosAvalista'];
-        $telefonoAvalista = $_POST['telefonoAvalista'];
-        $ocupacion = $_POST['ocupacion'];
-        $observacion = $_POST['observacion'];
+        $contactaTitular = $_POST['contactaTitular'];
+        $noContactaTitular = $_POST['noContactaTitular'];
+        $nombresApellidosVisita = $_POST['nombresApellidosVisita'];
+        $parentesco = $_POST['parentesco'];
+        $actividadEconomica = $_POST['actividadEconomica'];
+        $noPago = $_POST['noPago'];
+        $observacionesNoPago = $_POST['observacionesNoPago'];
 
-        if ($observacion == "") {
-        	 $observacion = null;
-        }
-
-        $request->session()->put('codigoGarantia', $codigoGarantia);
-        $request->session()->put('nombresApellidosAvalista', $nombresApellidosAvalista);
-        $request->session()->put('telefonoAvalista', $telefonoAvalista);
-        $request->session()->put('ocupacion', $ocupacion);
-        $request->session()->put('observacion', $observacion);
+        $request->session()->put('contactaTitular', $contactaTitular);
+        $request->session()->put('noContactaTitular', $noContactaTitular);
+        $request->session()->put('nombresApellidosVisita', $nombresApellidosVisita);
+        $request->session()->put('parentesco', $parentesco);
+        $request->session()->put('actividadEconomica', $actividadEconomica);
+        $request->session()->put('noPago', $noPago);
+        $request->session()->put('observacionesNoPago', $observacionesNoPago);
 
         return Response::json(array('html' => 'ok'));
     }
 
     public function resultadoVisitaContinuar(Request $request)
     {
-        $siguienteResultadoVisita = $_POST['siguienteInformacionAvalista'];
+        $siguienteResultadoVisita = $_POST['siguienteResultadoVisita'];
 
-        $request->session()->put('siguienteInformacionAvalista', $siguienteInformacionAvalista);
+        $request->session()->put('siguienteResultadoVisita', $siguienteResultadoVisita);
 
         return Response::json(array('html' => 'ok'));
     }

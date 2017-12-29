@@ -1,27 +1,32 @@
 $(document).ready(function()
 {
 	$("#formResultadoVisita").hide();
+	$("#noContacta").hide();
 	verificar();
 });
 
 $("#formResultadoVisita").on("submit", function()
 {
-	var codigoGarantia = $("#codigoGarantia").val();
-	var nombresApellidosAvalista = $("#nombresApellidosAvalista").val();
-	var telefonoAvalista = $("#telefonoAvalista").val();
-	var ocupacion = $("#ocupacion").val();
-	var observacion = $("#observacion").val();
+	var contactaTitular = $('input:radio[name=contactaTitular]:checked').val();
+	var noContactaTitular = $('input:radio[name=noContactaTitular]:checked').val();
+	var nombresApellidosVisita = $("#nombresApellidosVisita").val();
+	var parentesco = $("#parentesco").val();
+	var actividadEconomica = $("#actividadEconomica").val();
+	var noPago = $("#noPago").val();
+	var observacionesNoPago = $("#observacionesNoPago").val();
 
 	$.ajax({
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 		method: "POST",
 		url: "/admin/resultadoVisitaAlmacenar",
 		dataType: 'json',
-		data: { codigoGarantia: codigoGarantia,
-				nombresApellidosAvalista: nombresApellidosAvalista,
-				telefonoAvalista: telefonoAvalista,
-				ocupacion: ocupacion,
-				observacion: observacion }
+		data: { contactaTitular: contactaTitular,
+				noContactaTitular: noContactaTitular,
+				nombresApellidosVisita: nombresApellidosVisita,
+				parentesco: parentesco,
+				actividadEconomica: actividadEconomica,
+				noPago: noPago,
+				observacionesNoPago: observacionesNoPago }
 	})
 
 	.done(function(response){
@@ -62,11 +67,21 @@ function verificarInformacion()
 	})
 
 	.done(function(response){
-		$("#codigoGarantia").val(response.codigoGarantia);
-		$("#nombresApellidosAvalista").val(response.nombresApellidosAvalista);
-		$("#telefonoAvalista").val(response.telefonoAvalista);
-		$("#ocupacion").val(response.ocupacion);
-		$("#observacion").val(response.observacion);
+		if (response.contactaTitular == "si") {
+			$('#si').prop("checked", true);
+		} else if (response.direccionDeMayorContacto == "no") {
+			$('#no').prop("checked", true);
+		}
+		if (response.noContactaTitular == "si") {
+			$('#si2').prop("checked", true);
+		} else if (response.direccionDeMayorContacto == "no") {
+			$('#no2').prop("checked", true);
+		}
+		$("#nombresApellidosVisita").val(response.nombresApellidosVisita);
+		$("#parentesco").val(response.parentesco);
+		$("#actividadEconomica").val(response.actividadEconomica);
+		$("#noPago").val(response.noPago);
+		$("#observacionesNoPago").val(response.observacionesNoPago);
 	});
 }
 
@@ -86,3 +101,16 @@ function continuar()
 		// document.location ="/admin/resultadoVisita";
 	});
 }
+
+$("#formResultadoVisita").on("click", 'input[type="radio"]', function()
+{
+	var contactaTitular = $('input:radio[name=contactaTitular]:checked').val();
+
+	if (contactaTitular == "si") {
+		$("#noContacta").hide();
+		$('#si2').prop("checked", false);
+		$('#no2').prop("checked", false);
+	} else if (contactaTitular == "no") {
+		$("#noContacta").show();
+	}
+});
