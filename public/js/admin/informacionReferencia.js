@@ -43,7 +43,7 @@ function verificar()
 	})
 
 	.done(function(response){
-		if (response.siguienteInformacionCliente == "true") {
+		if (response.siguienteInformacionCliente != "true") {
 			verificarInformacion();
 			$("#formInformacionReferencia").show();
 		} else {

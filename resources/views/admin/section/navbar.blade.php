@@ -7,7 +7,7 @@
     <li><a href="/admin/informacionAvalista" style="margin-left: 2%;">Información Avalista</a></li>
     <li><a href="/admin/resultadoVisita" style="margin-left: 2%;">Resultado visita</a></li>
     <li><a href="/admin/acuerdoPago" style="margin-left: 2%;">Acuerdo de pago</a></li>
-    <li><a href="/admin/comentariosVisita" style="margin-left: 2%;">Comentarios de la visita</a></li>
+    <li><a href="/admin/comentarioVisita" style="margin-left: 2%;">Comentarios de la visita</a></li>
 
     <!-- Authentication Links -->
     @guest

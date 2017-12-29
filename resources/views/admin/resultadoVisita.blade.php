@@ -45,7 +45,7 @@
                     <label class="control-label" for="noPago">Motivo del NO PAGO</label>                
                     <input class="form-control" type="text" id="noPago" placeholder="Ingrese el motivo del no pago" required>
                     <label class="control-label" for="observacionesNoPago">Observaciones Motivo del NO PAGO</label>
-                    <textarea id="observacionesNoPago" class="form-control" rows="3" placeholder="Ingrese las observaciones del motivo del no pago"></textarea>
+                    <textarea id="observacionesNoPago" class="form-control" style="resize: none;" rows="3" placeholder="Ingrese las observaciones del motivo del no pago"></textarea>
                     <button type="submit" class="btn btn-success center-block" style="margin-top: 2%;">Continuar</button>
                 </form>
             </div>          

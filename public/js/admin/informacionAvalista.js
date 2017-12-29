@@ -41,7 +41,7 @@ function verificar()
 	})
 
 	.done(function(response){
-		if (response.siguienteInformacionReferencia == "true") {
+		if (response.siguienteInformacionReferencia != "true") {
 			verificarInformacion();
 			$("#formInformacionAvalista").show();
 		} else {

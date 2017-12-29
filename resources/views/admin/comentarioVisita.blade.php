@@ -15,7 +15,7 @@
                 <p id="siguiente" style="display: none;"></p>
                 <form id="formComentarioVisita" style="display: none; margin-left: 15%; margin-right: 15%;">
                     <label class="control-label" for="comentario">Comentario de la Visita o Descripción del inmueble</label>
-                    <textarea id="comentario" class="form-control" rows="3" placeholder="Ingrese el comentario de la visita o descripción del inmueble"></textarea>
+                    <textarea id="comentario" class="form-control" rows="3" style="resize: none;" placeholder="Ingrese el comentario de la visita o descripción del inmueble"></textarea>
                     <label class="control-label" for="#">Efecto de la visita</label>
                     <br>
                     <label class="control-label" for="noViveTrabaja">No vive / No Trabaja</label>                
@@ -39,7 +39,49 @@
                     <label class="control-label" for="cancelo">Ya Cancelo</label>
                     <input type="radio" id="cancelo" name="efectoVisita" value="cancelo" required>
                     <br>
-                    <button type="submit" class="btn btn-success center-block" style="margin-top: 2%; margin-bottom: 5%;">Continuar</button>
+                    <label class="control-label" for="#">Lugar inaccesible</label>
+                    <br>
+                    <label class="control-label" for="inseguridad">Inseguridad</label>                
+                    <input type="radio" id="inseguridad" name="motivo" value="inseguridad" required>
+                    <br>
+                    <label class="control-label" for="olaInvernal">Ola invernal</label>
+                    <input type="radio" id="olaInvernal" name="motivo" value="olaInvernal" required>
+                    <br>
+                    <label class="control-label" for="otro">Otros</label>
+                    <input type="radio" id="otro" name="motivo" value="otro" required>
+                    <input type="text" id="otroMotivo" class="form-control" style="display: none;" placeholder="Ingrese el motivo">
+                    <br>
+                    <label class="control-label" for="#">Dirección inexistente</label>
+                    <br>
+                    <label class="control-label" for="noEncontrada">No encontrada</label>                
+                    <input type="radio" id="noEncontrada" name="direccionInexistente" value="noEncontrada" required>
+                    <br>
+                    <label class="control-label" for="incompleta">Incompleta</label>
+                    <input type="radio" id="incompleta" name="direccionInexistente" value="incompleta" required>
+                    <br>
+                    <label class="control-label" for="#">Subrogación</label>
+                    <br>
+                    <label class="control-label" for="fallecido">Fallecido</label>                
+                    <input type="radio" id="fallecido" name="subrogacion" value="fallecido" required>
+                    <br>
+                    <label class="control-label" for="posibleNegociacion">Posible negociación</label>
+                    <input type="radio" id="posibleNegociacion" name="subrogacion" value="posibleNegociacion" required>
+                    <br>
+                    <label class="control-label" for="#">Tipo de contacto</label>
+                    <br>
+                    <label class="control-label" for="deudor">Deudor</label>                
+                    <input type="radio" id="deudor" name="tipoContacto" value="deudor" required>
+                    <br>
+                    <label class="control-label" for="conyuge">Conyuge</label>
+                    <input type="radio" id="conyuge" name="tipoContacto" value="conyuge" required>
+                    <br>
+                    <label class="control-label" for="codeudor">Codeudor</label>
+                    <input type="radio" id="codeudor" name="tipoContacto" value="codeudor" required>
+                    <br>
+                    <label class="control-label" for="tercero">Tercero</label>
+                    <input type="radio" id="tercero" name="tipoContacto" value="tercero" required>
+                    <br>
+                    <button type="submit" class="btn btn-success center-block" style="margin-top: 2%; margin-bottom: 5%;">Guardar</button>
                 </form>
             </div>          
         </div>

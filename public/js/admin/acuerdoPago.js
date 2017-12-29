@@ -41,7 +41,7 @@ function verificar()
 	})
 
 	.done(function(response){
-		if (response.siguienteResultadoVisita == "true") {
+		if (response.siguienteResultadoVisita != "true") {
 			verificarInformacion();
 			$("#formAcuerdoPago").show();
 		} else {

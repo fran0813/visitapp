@@ -31,7 +31,7 @@
                     <label class="control-label" for="vrPromesa">Vr Promesa</label>
                     <input type="text" class="form-control" id="vrPromesa" placeholder="Ingrese el vr promesa" required>
                     <label class="control-label" for="alternativa">Alternativas</label>
-                    <textarea id="alternativa" class="form-control" rows="3" placeholder="Ingrese las alternativas"></textarea>
+                    <textarea id="alternativa" class="form-control" rows="3" style="resize: none;" placeholder="Ingrese las alternativas"></textarea>
                     <button type="submit" class="btn btn-success center-block" style="margin-top: 2%; margin-bottom: 5%;">Continuar</button>
                 </form>
             </div>          

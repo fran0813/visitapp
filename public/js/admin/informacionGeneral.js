@@ -72,7 +72,7 @@ function verificar()
 	})
 
 	.done(function(response){
-		if (response.siguienteInformacionAgencia == "true") {
+		if (response.siguienteInformacionAgencia != "true") {
 			verificarInformacion();
 			$("#myCarousel").show();
 		} else {

@@ -68,11 +68,6 @@ function verificarInformacion()
 			$('#no').prop("checked", true);
 		}
 		$("#nDeProducto").val(response.nDeProducto);
-		if (response.fechaCompromiso == null) {
-			fecha();
-		} else {
-			$("#fechaCompromiso").val(response.fechaCompromiso);
-		}
 		$("#vrPromesa").val(response.vrPromesa);
 		$("#alternativa").val(response.alternativa);		
 	});
@@ -94,3 +89,14 @@ function continuar()
 		document.location ="/admin/";
 	});
 }
+
+$("#formComentarioVisita").on("click", 'input[type="radio"]', function()
+{
+	var motivo = $('input:radio[name=motivo]:checked').val();
+
+	if (motivo == "otro") {
+		$("#otroMotivo").show();
+	} else if (motivo != "otro") {
+		$("#otroMotivo").hide();
+	}
+});

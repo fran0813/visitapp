@@ -51,7 +51,7 @@ function verificar()
 	})
 
 	.done(function(response){
-		if (response.siguienteInformacionGeneral == "true") {
+		if (response.siguienteInformacionGeneral != "true") {
 			verificarInformacion();
 			$("#formInformacionCliente").show();
 		} else {

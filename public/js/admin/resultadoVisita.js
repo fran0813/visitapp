@@ -45,7 +45,7 @@ function verificar()
 	})
 
 	.done(function(response){
-		if (response.siguienteInformacionAvalista == "true") {
+		if (response.siguienteInformacionAvalista != "true") {
 			verificarInformacion();
 			$("#noContacta").hide();
 			$("#formResultadoVisita").show();
