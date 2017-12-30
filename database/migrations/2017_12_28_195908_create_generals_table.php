@@ -20,8 +20,14 @@ class CreateGeneralsTable extends Migration
             $table->string('disbursement_date', 45);
             $table->string('capital_balance', 45);
             $table->string('total_balance', 45);
+            $table->string('day_past_due', 45);
+            $table->string('interest_value_arrear', 45);
+            $table->string('current_interest_value', 45);
+            $table->string('safe_value', 45);
+            $table->string('gac_value', 45);
+            $table->string('qualification', 45);
             $table->string('sapro_stage', 45);
-            $table->string('inv_inic_goods', 45);
+            $table->string('inv_inic_good', 45);
             $table->string('embargo', 45);
             $table->integer('agency_id')->unsigned();
             $table->foreign('agency_id')->references('id')->on('agencies');

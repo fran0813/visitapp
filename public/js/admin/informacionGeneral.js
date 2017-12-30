@@ -32,31 +32,89 @@ $("#formInformacionGeneral3").on("submit", function()
 	var invBienesINIC = $("#invBienesINIC").val();
 	var embargo = $("#embargo").val();
 
-	$.ajax({
-		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-		method: "POST",
-		url: "/admin/informacionGeneralAlmacenar",
-		dataType: 'json',
-		data: { codAlivio: codAlivio,
-				obligacionN: obligacionN,
-				fechaDeDesembolso: fechaDeDesembolso,
-				saldoCapital: saldoCapital,
-				saldoTotal: saldoTotal,
-				saldoTotal: saldoTotal,
-				diasMora: diasMora,
-				VrIntMora: VrIntMora,
-				VrIntCorrientes: VrIntCorrientes,
-				VrSeguros: VrSeguros,
-				VrGac: VrGac,
-				calificacion: calificacion,
-				etapaSapro: etapaSapro,
-				invBienesINIC: invBienesINIC,
-				embargo: embargo }
-	})
+	if (codAlivio == "" || obligacionN == "" || saldoCapital == "" || saldoTotal == "") {
+		$("#myCarousel").carousel(0);
+		if (codAlivio == "") {
+			$("#siguiente").show();
+			$("#siguiente").html("No se ha ingresado la información del codigo alivio");
+			$("#codAlivio").focus();
+			location.href = "#siguiente";
+		} else if (obligacionN == "") {
+			$("#siguiente").show();
+			$("#siguiente").html("No se ha ingresado la información de la obligacion n°");
+			$("#obligacionN").focus();
+			location.href = "#siguiente";
+		} else if (saldoCapital == "") {
+			$("#siguiente").show();
+			$("#siguiente").html("No se ha ingresado la información del saldo de capital");
+			$("#saldoCapital").focus();
+			location.href = "#siguiente";
+		} else if (saldoTotal == "") {
+			$("#siguiente").show();
+			$("#siguiente").html("No se ha ingresado la información del saldo total");
+			$("#saldoTotal").focus();
+			location.href = "#siguiente";
+		}
+	} else if (diasMora == "" || VrIntMora == "" || VrIntCorrientes == "" || VrSeguros == "" || VrGac == "" || calificacion == "") {
+		$("#myCarousel").carousel(0);
+		if (diasMora == "") {
+			$("#siguiente").show();
+			$("#siguiente").html("No se ha ingresado la información de los dia de mora");
+			$("#diasMora").focus();
+			location.href = "#siguiente";
+		} else if (VrIntMora == "") {
+			$("#siguiente").show();
+			$("#siguiente").html("No se ha ingresado la información del valor intereses mora");
+			$("#VrIntMora").focus();
+			location.href = "#siguiente";
+		} else if (VrIntCorrientes == "") {
+			$("#siguiente").show();
+			$("#siguiente").html("No se ha ingresado la información del valor intereses corrientes");
+			$("#VrIntCorrientes").focus();
+			location.href = "#siguiente";
+		} else if (VrSeguros == "") {
+			$("#siguiente").show();
+			$("#siguiente").html("No se ha ingresado la información del valor de seguros");
+			$("#VrSeguros").focus();
+			location.href = "#siguiente";
+		} else if (VrGac == "") {
+			$("#siguiente").show();
+			$("#siguiente").html("No se ha ingresado la información del valor GAC");
+			$("#VrGac").focus();
+			location.href = "#siguiente";
+		} else if (calificacion == "") {
+			$("#siguiente").show();
+			$("#siguiente").html("No se ha ingresado la información de la calificación");
+			$("#calificacion").focus();
+			location.href = "#siguiente";
+		}
+	} else {
+		$.ajax({
+			headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+			method: "POST",
+			url: "/admin/informacionGeneralAlmacenar",
+			dataType: 'json',
+			data: { codAlivio: codAlivio,
+					obligacionN: obligacionN,
+					fechaDeDesembolso: fechaDeDesembolso,
+					saldoCapital: saldoCapital,
+					saldoTotal: saldoTotal,
+					saldoTotal: saldoTotal,
+					diasMora: diasMora,
+					VrIntMora: VrIntMora,
+					VrIntCorrientes: VrIntCorrientes,
+					VrSeguros: VrSeguros,
+					VrGac: VrGac,
+					calificacion: calificacion,
+					etapaSapro: etapaSapro,
+					invBienesINIC: invBienesINIC,
+					embargo: embargo }
+		})
 
-	.done(function(response){
-		continuar();
-	});
+		.done(function(response){
+			continuar();
+		});
+	}
 
 	return false;
 });
@@ -72,12 +130,11 @@ function verificar()
 	})
 
 	.done(function(response){
-		if (response.siguienteInformacionAgencia != "true") {
+		if (response.siguienteInformacionAgencia == "true") {
 			verificarInformacion();
 			$("#myCarousel").show();
 		} else {
-			$("#siguiente").show();
-			$("#siguiente").html("No se ha ingresado la información del paso anterior");
+			boton();
 		}
 	});
 }
@@ -101,7 +158,13 @@ function verificarInformacion()
 			$("#fechaDeDesembolso").val(response.fechaDeDesembolso);
 		}
 		$("#saldoCapital").val(response.saldoCapital);	
-		$("#saldoTotal").val(response.saldoTotal);
+		$("#saldoTotal").val(response.saldoTotal);	
+		$("#diasMora").val(response.diasMora);
+		$("#VrIntMora").val(response.VrIntMora);
+		$("#VrIntCorrientes").val(response.VrIntCorrientes);
+		$("#VrSeguros").val(response.VrSeguros);
+		$("#VrGac").val(response.VrGac);
+		$("#calificacion").val(response.calificacion);
 		$("#etapaSapro").val(response.etapaSapro);
 		$("#invBienesINIC").val(response.invBienesINIC);
 		$("#embargo").val(response.embargo);
@@ -144,3 +207,18 @@ function continuar()
 	});
 }
 
+function boton()
+{
+	$.ajax({
+		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+		method: "POST",
+		url: "/admin/boton",
+		dataType: 'json',
+		data: {  }
+	})
+
+	.done(function(response){
+		$("#siguiente").show();
+		$("#siguiente").html("No se ha ingresado la información del paso anterior"+ "<br>"+ response.html);
+	});
+}

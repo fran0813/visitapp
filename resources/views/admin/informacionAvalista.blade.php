@@ -12,14 +12,14 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12">
-                <p id="siguiente" style="display: none;"></p>
+                <p id="siguiente" style="display: none; margin-left: 15%;"></p>
                 <form id="formInformacionAvalista" style="display: none; margin-left: 15%; margin-right: 15%;">
-                    <label class="control-label" for="codigoGarantia">Código de Garantia</label>
+                    <label class="control-label" for="codigoGarantia">Código de garantia</label>
                     <input type="text" class="form-control" id="codigoGarantia" placeholder="Ingrese el código de garantia" required>
                     <label class="control-label" for="nombresApellidosAvalista">Nombres y apellidos</label>
                     <input type="text" class="form-control" id="nombresApellidosAvalista" placeholder="Ingrese los nombres y apellidos" required>
-                    <label class="control-label" for="telefonoAvalista">N° de Teléfono</label>
-                    <input type="number" class="form-control" id="telefonoAvalista" placeholder="Ingrese el teléfono" required>
+                    <label class="control-label" for="telefonoAvalista">N° de teléfono</label>
+                    <input type="number" class="form-control" id="telefonoAvalista" placeholder="Ingrese el teléfono" pattern="[0-9]+" required>
                     <label class="control-label" for="ocupacion">Ocupación</label>
                     <input type="text" class="form-control" id="ocupacion" placeholder="Ingrese la ocupación" required>
                     <label class="control-label" for="observacion">Observación</label>

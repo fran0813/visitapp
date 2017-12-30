@@ -43,12 +43,11 @@ function verificar()
 	})
 
 	.done(function(response){
-		if (response.siguienteInformacionCliente != "true") {
+		if (response.siguienteInformacionCliente == "true") {
 			verificarInformacion();
 			$("#formInformacionReferencia").show();
 		} else {
-			$("#siguiente").show();
-			$("#siguiente").html("No se ha ingresado la información del paso anterior");
+			boton();
 		}
 	});
 }
@@ -63,7 +62,7 @@ function verificarInformacion()
 		data: {  }
 	})
 
-	.done(function(response){
+	.done(function(response){ 
 		$("#referencia option[value="+ response.referencia +"]").attr("selected",true);
 		$("#nombresApellidosReferencia").val(response.nombresApellidosReferencia);
 		$("#telefonoReferencia").val(response.telefonoReferencia);
@@ -84,5 +83,21 @@ function continuar()
 
 	.done(function(response){
 		document.location ="/admin/informacionAvalista";
+	});
+}
+
+function boton()
+{
+	$.ajax({
+		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+		method: "POST",
+		url: "/admin/boton",
+		dataType: 'json',
+		data: {  }
+	})
+
+	.done(function(response){
+		$("#siguiente").show();
+		$("#siguiente").html("No se ha ingresado la información del paso anterior"+ "<br>"+ response.html);
 	});
 }

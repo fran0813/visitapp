@@ -12,7 +12,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12">
-                <p id="siguiente" style="display: none;"></p>
+                <p id="siguiente" style="display: none; margin-left: 15%;"></p>
                 <form id="formInformacionAgencia" style="margin-left: 15%; margin-right: 15%;">
                     <label class="control-label" for="nombreDeLaAgencia">Nombre de la agencia externa</label>
                     <input type="text" class="form-control" id="nombreDeLaAgencia" placeholder="Ingrese la agencia" required>

@@ -5,22 +5,30 @@ $(document).ready(function()
 
 $("#formComentarioVisita").on("submit", function()
 {
-	var acuerdo = $('input:radio[name=acuerdo]:checked').val();
-	var nDeProducto = $("#nDeProducto").val();
-	var fechaCompromiso = $("#fechaCompromiso").val();
-	var vrPromesa = $("#vrPromesa").val();
-	var alternativa = $("#alternativa").val();
+	var comentario = $("#comentario").val();
+	var efectoVisita = $('input:radio[name=efectoVisita]:checked').val();
+	var motivo = $('input:radio[name=motivo]:checked').val();
+	if (motivo == "otro") {
+		var otroMotivo = $("#otroMotivo").val();
+	} else {
+		var otroMotivo = null;
+	}
+	var direccionInexistente = $('input:radio[name=direccionInexistente]:checked').val();
+	var subrogacion = $('input:radio[name=subrogacion]:checked').val();
+	var tipoContacto = $('input:radio[name=tipoContacto]:checked').val();
 
 	$.ajax({
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 		method: "POST",
 		url: "/admin/comentarioVisitaAlmacenar",
 		dataType: 'json',
-		data: { acuerdo: acuerdo,
-				nDeProducto: nDeProducto,
-				fechaCompromiso: fechaCompromiso,
-				vrPromesa: vrPromesa,
-				alternativa: alternativa }
+		data: { comentario: comentario,
+				efectoVisita: efectoVisita,
+				motivo: motivo,
+				otroMotivo: otroMotivo,
+				direccionInexistente: direccionInexistente,
+				subrogacion: subrogacion,
+				tipoContacto: tipoContacto }
 	})
 
 	.done(function(response){
@@ -41,12 +49,11 @@ function verificar()
 	})
 
 	.done(function(response){
-		if (response.siguienteResultadoVisita != "true") {
+		if (response.siguienteAcuerdoPago == "true") {
 			verificarInformacion();
 			$("#formComentarioVisita").show();
 		} else {
-			$("#siguiente").show();
-			$("#siguiente").html("No se ha ingresado la información del paso anterior");
+			boton();
 		}
 	});
 }
@@ -62,14 +69,16 @@ function verificarInformacion()
 	})
 
 	.done(function(response){
-		if (response.acuerdo == "si") {
-			$('#si').prop("checked", true);
-		} else if (response.acuerdo == "no") {
-			$('#no').prop("checked", true);
-		}
-		$("#nDeProducto").val(response.nDeProducto);
-		$("#vrPromesa").val(response.vrPromesa);
-		$("#alternativa").val(response.alternativa);		
+		$("#comentario").val(response.comentario);
+		$('#'+response.efectoVisita).prop("checked", true);		
+		$('#'+response.motivo).prop("checked", true);
+		if (response.motivo == "otro") {
+			$("#otroMotivo").show();
+			$("#otroMotivo").val(response.otroMotivo);
+		}	
+		$('#'+response.direccionInexistente).prop("checked", true);		
+		$('#'+response.subrogacion).prop("checked", true);		
+		$('#'+response.tipoContacto).prop("checked", true);		
 	});
 }
 
@@ -100,3 +109,19 @@ $("#formComentarioVisita").on("click", 'input[type="radio"]', function()
 		$("#otroMotivo").hide();
 	}
 });
+
+function boton()
+{
+	$.ajax({
+		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+		method: "POST",
+		url: "/admin/boton",
+		dataType: 'json',
+		data: {  }
+	})
+
+	.done(function(response){
+		$("#siguiente").show();
+		$("#siguiente").html("No se ha ingresado la información del paso anterior"+ "<br>"+ response.html);
+	});
+}

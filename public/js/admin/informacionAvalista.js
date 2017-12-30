@@ -41,12 +41,11 @@ function verificar()
 	})
 
 	.done(function(response){
-		if (response.siguienteInformacionReferencia != "true") {
+		if (response.siguienteInformacionReferencia == "true") {
 			verificarInformacion();
 			$("#formInformacionAvalista").show();
 		} else {
-			$("#siguiente").show();
-			$("#siguiente").html("No se ha ingresado la información del paso anterior");
+			boton();
 		}
 	});
 }
@@ -84,5 +83,21 @@ function continuar()
 
 	.done(function(response){
 		document.location ="/admin/resultadoVisita";
+	});
+}
+
+function boton()
+{
+	$.ajax({
+		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+		method: "POST",
+		url: "/admin/boton",
+		dataType: 'json',
+		data: {  }
+	})
+
+	.done(function(response){
+		$("#siguiente").show();
+		$("#siguiente").html("No se ha ingresado la información del paso anterior"+ "<br>"+ response.html);
 	});
 }

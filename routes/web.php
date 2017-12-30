@@ -60,7 +60,7 @@ Route::group(['prefix' => 'admin'], function()
 	Route::post('/informacionAvalistaContinuar', 'AdminController@informacionAvalistaContinuar')->middleware('auth');
 	Route::post('/resultadoVisitaContinuar', 'AdminController@resultadoVisitaContinuar')->middleware('auth');
 	Route::post('/acuerdoPagoContinuar', 'AdminController@acuerdoPagoContinuar')->middleware('auth');
-	Route::post('/comentariosVisitaContinuar', 'AdminController@comentariosVisitaContinuar')->middleware('auth');
+	Route::post('/comentarioVisitaContinuar', 'AdminController@comentarioVisitaContinuar')->middleware('auth');
 
 	// Validar si es verdadero
 	Route::post('/validarInformacionGeneral', 'AdminController@validarInformacionGeneral')->middleware('auth');
@@ -73,6 +73,7 @@ Route::group(['prefix' => 'admin'], function()
 	Route::post('/validarComentarioVisita', 'AdminController@validarComentarioVisita')->middleware('auth');
 
 	// Guarda la información
+	Route::post('/boton', 'AdminController@boton')->middleware('auth');
 	Route::post('/guardar', 'AdminController@guardar')->middleware('auth');
 });
 

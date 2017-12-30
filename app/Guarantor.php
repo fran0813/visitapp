@@ -9,7 +9,7 @@ class Guarantor extends Model
     protected $table = "references";
 
     protected $fillable = [
-    	'guarantee_code', 'names_lastnames_guarantee', 'guarantee_phone', 'ocupation', 'observation', 'reference_id',
+    	'guarantee_code', 'name_lastname_guarantee', 'guarantee_phone', 'ocupation', 'observation', 'reference_id',
 	];
 
 	public function reference()

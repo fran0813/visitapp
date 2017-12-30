@@ -51,12 +51,11 @@ function verificar()
 	})
 
 	.done(function(response){
-		if (response.siguienteInformacionGeneral != "true") {
+		if (response.siguienteInformacionGeneral == "true") {
 			verificarInformacion();
 			$("#formInformacionCliente").show();
 		} else {
-			$("#siguiente").show();
-			$("#siguiente").html("No se ha ingresado la información del paso anterior");
+			boton();
 		}
 	});
 }
@@ -103,5 +102,21 @@ function continuar()
 
 	.done(function(response){
 		document.location ="/admin/informacionReferencia";
+	});
+}
+
+function boton()
+{
+	$.ajax({
+		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+		method: "POST",
+		url: "/admin/boton",
+		dataType: 'json',
+		data: {  }
+	})
+
+	.done(function(response){
+		$("#siguiente").show();
+		$("#siguiente").html("No se ha ingresado la información del paso anterior"+ "<br>"+ response.html);
 	});
 }

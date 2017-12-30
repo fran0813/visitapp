@@ -6,30 +6,41 @@ $(document).ready(function()
 $("#formResultadoVisita").on("submit", function()
 {
 	var contactaTitular = $('input:radio[name=contactaTitular]:checked').val();
-	var noContactaTitular = $('input:radio[name=noContactaTitular]:checked').val();
+
+	if (contactaTitular  == "si") {
+		var noContactaTitular = null;
+	} else {
+		var noContactaTitular = $('input:radio[name=noContactaTitular]:checked').val();
+	}
+
 	var nombresApellidosVisita = $("#nombresApellidosVisita").val();
 	var parentesco = $("#parentesco").val();
 	var actividadEconomica = $("#actividadEconomica").val();
 	var noPago = $("#noPago").val();
 	var observacionesNoPago = $("#observacionesNoPago").val();
 
-	$.ajax({
-		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-		method: "POST",
-		url: "/admin/resultadoVisitaAlmacenar",
-		dataType: 'json',
-		data: { contactaTitular: contactaTitular,
-				noContactaTitular: noContactaTitular,
-				nombresApellidosVisita: nombresApellidosVisita,
-				parentesco: parentesco,
-				actividadEconomica: actividadEconomica,
-				noPago: noPago,
-				observacionesNoPago: observacionesNoPago }
-	})
+	if (noContactaTitular == null) {
+		$("#siguiente").show();
+		$("#siguiente").html("No se ha ingresado la informacion del no contacto con el titular");
+	} else {
+		$.ajax({
+			headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+			method: "POST",
+			url: "/admin/resultadoVisitaAlmacenar",
+			dataType: 'json',
+			data: { contactaTitular: contactaTitular,
+					noContactaTitular: noContactaTitular,
+					nombresApellidosVisita: nombresApellidosVisita,
+					parentesco: parentesco,
+					actividadEconomica: actividadEconomica,
+					noPago: noPago,
+					observacionesNoPago: observacionesNoPago }
+		})
 
-	.done(function(response){
-		continuar();
-	});
+		.done(function(response){
+			continuar();
+		});
+	}
 
 	return false;
 });
@@ -45,13 +56,11 @@ function verificar()
 	})
 
 	.done(function(response){
-		if (response.siguienteInformacionAvalista != "true") {
+		if (response.siguienteInformacionAvalista == "true") {
 			verificarInformacion();
-			$("#noContacta").hide();
 			$("#formResultadoVisita").show();
 		} else {
-			$("#siguiente").show();
-			$("#siguiente").html("No se ha ingresado la información del paso anterior");
+			boton();
 		}
 	});
 }
@@ -115,3 +124,19 @@ $("#formResultadoVisita").on("click", 'input[type="radio"]', function()
 		$("#noContacta").show();
 	}
 });
+
+function boton()
+{
+	$.ajax({
+		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+		method: "POST",
+		url: "/admin/boton",
+		dataType: 'json',
+		data: {  }
+	})
+
+	.done(function(response){
+		$("#siguiente").show();
+		$("#siguiente").html("No se ha ingresado la información del paso anterior"+ "<br>"+ response.html);
+	});
+}

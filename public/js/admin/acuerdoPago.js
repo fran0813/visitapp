@@ -6,26 +6,45 @@ $(document).ready(function()
 $("#formAcuerdoPago").on("submit", function()
 {
 	var acuerdo = $('input:radio[name=acuerdo]:checked').val();
-	var nDeProducto = $("#nDeProducto").val();
-	var fechaCompromiso = $("#fechaCompromiso").val();
-	var vrPromesa = $("#vrPromesa").val();
-	var alternativa = $("#alternativa").val();
+	if (acuerdo  == "si") {
+		var nDeProducto = $("#nDeProducto").val();
+		var fechaCompromiso = $("#fechaCompromiso").val();
+		var vrPromesa = $("#vrPromesa").val();
+		var alternativa = $("#alternativa").val();
+	} else {
+		var nDeProducto = null;
+		var fechaCompromiso = null;
+		var vrPromesa = null;
+		var alternativa = null;
+	}
 
-	$.ajax({
-		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-		method: "POST",
-		url: "/admin/acuerdoPagoAlmacenar",
-		dataType: 'json',
-		data: { acuerdo: acuerdo,
-				nDeProducto: nDeProducto,
-				fechaCompromiso: fechaCompromiso,
-				vrPromesa: vrPromesa,
-				alternativa: alternativa }
-	})
+	if (nDeProducto == "") {
+		$("#siguiente").show();
+		$("#siguiente").html("No se ha ingresado la información de n° de producto");
+		$("#nDeProducto").focus();
+		location.href = "#siguiente";
+	} else if (vrPromesa == "") {
+		$("#siguiente").show();
+		$("#siguiente").html("No se ha ingresado la información del valor de la promesa");
+		$("#vrPromesa").focus();
+		location.href = "#siguiente";
+	} else {
+		$.ajax({
+			headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+			method: "POST",
+			url: "/admin/acuerdoPagoAlmacenar",
+			dataType: 'json',
+			data: { acuerdo: acuerdo,
+					nDeProducto: nDeProducto,
+					fechaCompromiso: fechaCompromiso,
+					vrPromesa: vrPromesa,
+					alternativa: alternativa }
+		})
 
-	.done(function(response){
-		continuar();
-	});
+		.done(function(response){
+			continuar();
+		});
+	}
 
 	return false;
 });
@@ -41,12 +60,11 @@ function verificar()
 	})
 
 	.done(function(response){
-		if (response.siguienteResultadoVisita != "true") {
+		if (response.siguienteResultadoVisita == "true") {
 			verificarInformacion();
 			$("#formAcuerdoPago").show();
 		} else {
-			$("#siguiente").show();
-			$("#siguiente").html("No se ha ingresado la información del paso anterior");
+			boton();
 		}
 	});
 }
@@ -111,5 +129,33 @@ function continuar()
 
 	.done(function(response){
 		document.location ="/admin/comentarioVisita";
+	});
+}
+
+$("#formAcuerdoPago").on("click", 'input[type="radio"]', function()
+{
+	var acuerdo = $('input:radio[name=acuerdo]:checked').val();
+
+	if (acuerdo == "si") {
+		$("#acuerdo").show();
+		fecha();
+	} else if (acuerdo == "no") {
+		$("#acuerdo").hide();
+	}
+});
+
+function boton()
+{
+	$.ajax({
+		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+		method: "POST",
+		url: "/admin/boton",
+		dataType: 'json',
+		data: {  }
+	})
+
+	.done(function(response){
+		$("#siguiente").show();
+		$("#siguiente").html("No se ha ingresado la información del paso anterior"+ "<br>"+ response.html);
 	});
 }

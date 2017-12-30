@@ -54,6 +54,72 @@ class AdminController extends Controller
         return view('admin.comentarioVisita');
     }
 
+    public function boton(Request $request)
+    {
+        $html = "";
+
+        $siguienteInformacionAgencia = null;
+        $siguienteInformacionGeneral = null;
+        $siguienteInformacionCliente = null;
+        $siguienteInformacionReferencia = null;
+        $siguienteInformacionAvalista = null;
+        $siguienteResultadoVisita = null;
+        $siguienteAcuerdoPago = null;
+        $siguienteComentarioVisita = null;
+
+        if($request->session()->get("siguienteInformacionAgencia")){
+            $siguienteInformacionAgencia = $request->session()->get("siguienteInformacionAgencia");
+        }
+
+        if($request->session()->get("siguienteInformacionGeneral")){
+            $siguienteInformacionGeneral = $request->session()->get("siguienteInformacionGeneral");
+        }
+
+        if($request->session()->get("siguienteInformacionCliente")){
+            $siguienteInformacionCliente = $request->session()->get("siguienteInformacionCliente");
+        }
+
+        if($request->session()->get("siguienteInformacionReferencia")){
+            $siguienteInformacionReferencia = $request->session()->get("siguienteInformacionReferencia");
+        }
+
+        if($request->session()->get("siguienteInformacionAvalista")){
+            $siguienteInformacionAvalista = $request->session()->get("siguienteInformacionAvalista");
+        }
+
+        if($request->session()->get("siguienteResultadoVisita")){
+            $siguienteResultadoVisita = $request->session()->get("siguienteResultadoVisita");
+        }
+
+        if($request->session()->get("siguienteAcuerdoPago")){
+            $siguienteAcuerdoPago = $request->session()->get("siguienteAcuerdoPago");
+        }
+
+        if($request->session()->get("siguienteComentarioVisita")){
+            $siguienteComentarioVisita = $request->session()->get("siguienteComentarioVisita");
+        }
+
+        if ($siguienteInformacionAgencia == null) {
+            $html = "<a href='/admin/informacionAgencia' class='btn btn-info'>Regresar</a>";
+        } elseif ($siguienteInformacionGeneral == null) {
+            $html = "<a href='/admin/informacionGeneral' class='btn btn-info'>Regresar</a>";
+        } elseif ($siguienteInformacionCliente == null) {
+            $html = "<a href='/admin/informacionCliente' class='btn btn-info'>Regresar</a>";
+        } elseif ($siguienteInformacionReferencia == null) {
+            $html = "<a href='/admin/informacionReferencia' class='btn btn-info'>Regresar</a>";
+        } elseif ($siguienteInformacionAvalista == null) {
+            $html = "<a href='/admin/informacionReferencia' class='btn btn-info'>Regresar</a>";
+        } elseif ($siguienteResultadoVisita == null) {
+            $html = "<a href='/admin/resultadoVisita' class='btn btn-info'>Regresar</a>";
+        } elseif ($siguienteAcuerdoPago == null) {
+            $html = "<a href='/admin/acuerdoPago' class='btn btn-info'>Regresar</a>";
+        } elseif ($siguienteComentarioVisita == null) {
+            $html = "<a href='/admin/comentarioVisita' class='btn btn-info'>Regresar</a>";
+        }
+
+        return Response::json(array('html' => $html));
+    }
+
     public function verificarInformacionAgencia(Request $request)
     {
         $nombreDeLaAgencia = null;
@@ -202,10 +268,10 @@ class AdminController extends Controller
         $request->session()->put('saldoCapital', $saldoCapital);
         $request->session()->put('saldoTotal', $saldoTotal);
         $request->session()->put('diasMora', $diasMora);
-        $request->session()->put('diasMora', $diasMora);
         $request->session()->put('VrIntMora', $VrIntMora);
         $request->session()->put('VrIntCorrientes', $VrIntCorrientes);
         $request->session()->put('VrSeguros', $VrSeguros);
+        $request->session()->put('VrGac', $VrGac);
         $request->session()->put('calificacion', $calificacion);
         $request->session()->put('etapaSapro', $etapaSapro);
         $request->session()->put('invBienesINIC', $invBienesINIC);
@@ -340,7 +406,7 @@ class AdminController extends Controller
     		|| $request->session()->get("nombresApellidosReferencia")
     		|| $request->session()->get("telefonoReferencia")
     	){
-            $nombresApellidosReferencia = $request->session()->get("referencia");
+            $referencia = $request->session()->get("referencia");
             $nombresApellidosReferencia = $request->session()->get("nombresApellidosReferencia");
             $telefonoReferencia = $request->session()->get("telefonoReferencia");
         }
@@ -600,46 +666,58 @@ class AdminController extends Controller
 
     public function verificarComentarioVisita(Request $request)
     {
-		$acuerdo = null;
-		$nDeProducto = null;
-		$fechaCompromiso = null;
-		$vrPromesa = null;
-		$alternativa = null;
+		$comentario = null;
+        $efectoVisita = null;
+        $motivo = null;
+        $otroMotivo = null;
+        $direccionInexistente = null;
+        $subrogacion = null;
+        $tipoContacto = null;
 
-        if($request->session()->get("acuerdo")
-            || $request->session()->get("nDeProducto")
-            || $request->session()->get("fechaCompromiso")
-            || $request->session()->get("vrPromesa")
-            || $request->session()->get("alternativa")
+        if($request->session()->get("comentario")
+            || $request->session()->get("efectoVisita")
+            || $request->session()->get("motivo")
+            || $request->session()->get("otroMotivo")
+            || $request->session()->get("direccionInexistente")
+            || $request->session()->get("subrogacion")
+            || $request->session()->get("tipoContacto")
         ){
-            $acuerdo = $request->session()->get("acuerdo");
-            $nDeProducto = $request->session()->get("nDeProducto");
-            $fechaCompromiso = $request->session()->get("fechaCompromiso");
-            $vrPromesa = $request->session()->get("vrPromesa");
-            $alternativa = $request->session()->get("alternativa");
+            $comentario = $request->session()->get("comentario");
+            $efectoVisita = $request->session()->get("efectoVisita");
+            $motivo = $request->session()->get("motivo");
+            $otroMotivo = $request->session()->get("otroMotivo");
+            $direccionInexistente = $request->session()->get("direccionInexistente");
+            $subrogacion = $request->session()->get("subrogacion");
+            $tipoContacto = $request->session()->get("tipoContacto");
         }
 
-        return Response::json(array('acuerdo' => $acuerdo,
-                                    'nDeProducto' => $nDeProducto,
-                                    'fechaCompromiso' => $fechaCompromiso,
-                                    'vrPromesa' => $vrPromesa,
-                                    'alternativa' => $alternativa
+        return Response::json(array('comentario' => $comentario,
+                                    'efectoVisita' => $efectoVisita,
+                                    'motivo' => $motivo,
+                                    'otroMotivo' => $otroMotivo,
+                                    'direccionInexistente' => $direccionInexistente,
+                                    'subrogacion' => $subrogacion,
+                                    'tipoContacto' => $tipoContacto
                                     ));
     }
 
     public function comentarioVisitaAlmacenar(Request $request)
     {
-        $acuerdo = $_POST['acuerdo'];
-        $nDeProducto = $_POST['nDeProducto'];
-        $fechaCompromiso = $_POST['fechaCompromiso'];
-        $vrPromesa = $_POST['vrPromesa'];
-        $alternativa = $_POST['alternativa'];
+        $comentario = $_POST['comentario'];
+        $efectoVisita = $_POST['efectoVisita'];
+        $motivo = $_POST['motivo'];
+        $otroMotivo = $_POST['otroMotivo'];
+        $direccionInexistente = $_POST['direccionInexistente'];
+        $subrogacion = $_POST['subrogacion'];
+        $tipoContacto = $_POST['tipoContacto'];
 
-        $request->session()->put('acuerdo', $acuerdo);
-        $request->session()->put('nDeProducto', $nDeProducto);
-        $request->session()->put('fechaCompromiso', $fechaCompromiso);
-        $request->session()->put('vrPromesa', $vrPromesa);
-        $request->session()->put('alternativa', $alternativa);
+        $request->session()->put('comentario', $comentario);
+        $request->session()->put('efectoVisita', $efectoVisita);
+        $request->session()->put('motivo', $motivo);
+        $request->session()->put('otroMotivo', $otroMotivo);
+        $request->session()->put('direccionInexistente', $direccionInexistente);
+        $request->session()->put('subrogacion', $subrogacion);
+        $request->session()->put('tipoContacto', $tipoContacto);
 
         return Response::json(array('html' => 'ok'));
     }
