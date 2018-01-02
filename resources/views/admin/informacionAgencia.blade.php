@@ -3,7 +3,7 @@
     @extends('admin.index')
 
     @section('brand')
-        <a class="navbar-brand" href="{{ url('/admin/informacionAgencia') }}" style="width: 70%; height: 40%;">
+        <a class="navbar-brand" href="{{ url('/admin/informacionAgencia') }}" style="height: 40%;">
             Información Agencia
         </a>
     @endsection
@@ -22,6 +22,7 @@
                     <input type="date" class="form-control" id="fecha" required>
                     <label class="control-label" for="ciudad">Ciudad</label>
                     <input type="text" class="form-control" id="ciudad" placeholder="Ingrese la ciudad" required>
+                    <div id="map" style="margin-top: 2%;"></div>
                     <button type="submit" class="btn btn-success center-block" style="margin-top: 2%; margin-bottom: 5%;">Continuar</button>
                 </form>
             </div>          
@@ -31,6 +32,9 @@
 
     @section('javascript')
         <script src="{{ asset('js/admin/informacionAgencia.js') }}"></script>
+        <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0rqSIP9AEZwZ4e0drcvZT9vjholUzDY4&callback=initMap">
+        </script>
     @endsection
 
 @else

@@ -3,7 +3,7 @@
     @extends('admin.index')
 
     @section('brand')
-        <a class="navbar-brand" href="{{ url('/admin/comentarioVisita') }}" style="width: 70%; height: 40%;">
+        <a class="navbar-brand" href="{{ url('/admin/comentarioVisita') }}" style="height: 40%;">
             Comentario de la Visita
         </a>
     @endsection

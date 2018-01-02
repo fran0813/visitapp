@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Guarantor extends Model
 {
-    protected $table = "references";
+    protected $table = "guarantors";
 
     protected $fillable = [
     	'guarantee_code', 'name_lastname_guarantee', 'guarantee_phone', 'ocupation', 'observation', 'reference_id',

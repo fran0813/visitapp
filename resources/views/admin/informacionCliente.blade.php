@@ -3,7 +3,7 @@
     @extends('admin.index')
 
     @section('brand')
-        <a class="navbar-brand" href="{{ url('/admin/informacionCliente') }}" style="width: 70%; height: 40%;">
+        <a class="navbar-brand" href="{{ url('/admin/informacionCliente') }}" style="height: 40%;">
             Información del cliente
         </a>
     @endsection
@@ -39,7 +39,7 @@
                     <br>
                     <label class="control-label" for="direccionVisita">Dirección de visita</label>
                     <input type="text" class="form-control" id="direccionVisita" placeholder="Ingrese la dirección de visita" required>
-                    <button type="submit" class="btn btn-success center-block" style="margin-top: 2%;">Continuar</button>
+                    <button type="submit" class="btn btn-success center-block" style="margin-top: 2%; margin-bottom: 5%;">Continuar</button>
                 </form>
             </div>          
         </div>

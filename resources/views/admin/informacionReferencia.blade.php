@@ -3,7 +3,7 @@
     @extends('admin.index')
 
     @section('brand')
-        <a class="navbar-brand" href="{{ url('/admin/informacionReferencia') }}" style="width: 70%; height: 40%;">
+        <a class="navbar-brand" href="{{ url('/admin/informacionReferencia') }}" style="height: 40%;">
             Información Referencia
         </a>
     @endsection
@@ -24,7 +24,7 @@
                     <input type="text" class="form-control" id="nombresApellidosReferencia" placeholder="Ingrese nombres y apellidos" required>
                     <label class="control-label" for="telefonoReferencia">N° de teléfono</label>
                     <input type="number" class="form-control" id="telefonoReferencia" placeholder="Ingrese el teléfono" pattern="[0-9]+" required>
-                    <button type="submit" class="btn btn-success center-block" style="margin-top: 2%;">Continuar</button>
+                    <button type="submit" class="btn btn-success center-block" style="margin-top: 2%; margin-bottom: 5%;">Continuar</button>
                 </form>
             </div>          
         </div>

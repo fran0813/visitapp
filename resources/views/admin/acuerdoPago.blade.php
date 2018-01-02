@@ -3,7 +3,7 @@
     @extends('admin.index')
 
     @section('brand')
-        <a class="navbar-brand" href="{{ url('/admin/acuerdoPago') }}" style="width: 70%; height: 40%;">
+        <a class="navbar-brand" href="{{ url('/admin/acuerdoPago') }}" style="height: 40%;">
             Acuerdo de Pago
         </a>
     @endsection

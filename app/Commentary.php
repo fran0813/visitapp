@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class commentary extends Model
+class Commentary extends Model
 {
     protected $table = "comentaries";
 

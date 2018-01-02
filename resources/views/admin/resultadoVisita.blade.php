@@ -3,7 +3,7 @@
     @extends('admin.index')
 
     @section('brand')
-        <a class="navbar-brand" href="{{ url('/admin/resultadoVisita') }}" style="width: 70%; height: 40%;">
+        <a class="navbar-brand" href="{{ url('/admin/resultadoVisita') }}" style="height: 40%;">
             Resultado Visita
         </a>
     @endsection
@@ -44,7 +44,7 @@
                     <input class="form-control" type="text" id="noPago" placeholder="Ingrese el motivo del no pago" required>
                     <label class="control-label" for="observacionesNoPago">Observaciones motivo del NO PAGO</label>
                     <textarea id="observacionesNoPago" class="form-control" style="resize: none;" rows="3" placeholder="Ingrese las observaciones del motivo del no pago"></textarea>
-                    <button type="submit" class="btn btn-success center-block" style="margin-top: 2%;">Continuar</button>
+                    <button type="submit" class="btn btn-success center-block" style="margin-top: 2%; margin-bottom: 5%;">Continuar</button>
                 </form>
             </div>          
         </div>

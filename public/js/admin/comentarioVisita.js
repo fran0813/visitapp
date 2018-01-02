@@ -95,7 +95,7 @@ function continuar()
 	})
 
 	.done(function(response){
-		document.location ="/admin/";
+		document.location ="/admin/firma";
 	});
 }
 

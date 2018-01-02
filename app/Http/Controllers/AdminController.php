@@ -6,6 +6,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use \Response;
+use App\Agency;
+use App\General;
+use App\Client;
+use App\Reference;
+use App\Guarantor;
+use App\Visit;
+use App\Agreement;
+use App\Commentary;
+use App\Firm;
+use App\Localitation;
 
 class AdminController extends Controller
 {
@@ -52,6 +62,11 @@ class AdminController extends Controller
     public function comentarioVisita()
     {
         return view('admin.comentarioVisita');
+    }
+
+    public function firma()
+    {
+        return view('admin.firma');
     }
 
     public function boton(Request $request)
@@ -727,6 +742,271 @@ class AdminController extends Controller
         $siguienteComentarioVisita = $_POST['siguienteComentarioVisita'];
 
         $request->session()->put('siguienteComentarioVisita', $siguienteComentarioVisita);
+
+        return Response::json(array('html' => 'ok'));
+    }
+
+    public function validarFirma(Request $request)
+    {
+        $siguienteComentarioVisita = null;
+
+        if($request->session()->get("siguienteComentarioVisita")){
+            $siguienteComentarioVisita = $request->session()->get("siguienteComentarioVisita");
+        }
+
+        return Response::json(array('siguienteComentarioVisita' => $siguienteComentarioVisita));
+    }
+
+    public function coordenadas(Request $request)
+    {
+        $lat = $_POST['lat'];
+        $lng = $_POST['lng'];
+
+        $request->session()->put('lat', $lat);
+        $request->session()->put('lng', $lng);
+
+        return Response::json(array('html' => 'ok'));
+    }
+
+    public function guardar(Request $request)
+    {
+        $nombreDeLaAgencia = $request->session()->get("nombreDeLaAgencia");
+        $franja = $request->session()->get("franja");
+        $fecha = $request->session()->get("fecha");
+        $ciudad = $request->session()->get("ciudad");
+
+        $create_agency = new Agency;
+        $create_agency->name = $nombreDeLaAgencia;
+        $create_agency->time_zone = $franja;
+        $create_agency->date = $fecha;
+        $create_agency->city = $ciudad;
+        $create_agency->user_id = Auth::user()->id;
+        $create_agency->save();
+
+        $codAlivio = $request->session()->get("codAlivio");
+        $obligacionN = $request->session()->get("obligacionN");
+        $fechaDeDesembolso = $request->session()->get("fechaDeDesembolso");
+        $saldoCapital = $request->session()->get("saldoCapital");
+        $saldoTotal = $request->session()->get("saldoTotal");
+        $diasMora = $request->session()->get("diasMora");
+        $VrIntMora = $request->session()->get("VrIntMora");
+        $VrIntCorrientes = $request->session()->get("VrIntCorrientes");
+        $VrSeguros = $request->session()->get("VrSeguros");
+        $VrGac = $request->session()->get("VrGac");
+        $calificacion = $request->session()->get("calificacion");
+        $etapaSapro = $request->session()->get("etapaSapro");
+        $invBienesINIC = $request->session()->get("invBienesINIC");
+        $embargo = $request->session()->get("embargo");
+
+        $agencies = Agency::orderBy('id', 'desc')
+                            ->limit(1)
+                            ->get();
+
+        foreach ($agencies as $agency) {
+            $agency_id = $agency->id;
+        }
+
+        $create_general = new General;
+        $create_general->relief_code = $codAlivio;
+        $create_general->obligation_n = $obligacionN;
+        $create_general->disbursement_date = $fechaDeDesembolso;
+        $create_general->capital_balance = $saldoCapital;
+        $create_general->total_balance = $saldoTotal;
+        $create_general->day_past_due = $diasMora;
+        $create_general->interest_value_arrear = $VrIntMora;
+        $create_general->current_interest_value = $VrIntCorrientes;
+        $create_general->safe_value = $VrSeguros;
+        $create_general->gac_value = $VrGac;
+        $create_general->qualification = $calificacion;
+        $create_general->sapro_stage = $etapaSapro;
+        $create_general->inv_inic_good = $invBienesINIC;
+        $create_general->embargo = $embargo;
+        $create_general->agency_id = $agency_id;
+        $create_general->save();
+
+        $nombresApellidos = $request->session()->get("nombresApellidos");
+        $documentoIdentificacion = $request->session()->get("documentoIdentificacion");
+        $correo = $request->session()->get("correo");
+        $celular = $request->session()->get("celular");
+        $direccion = $request->session()->get("direccion");
+        $telefono = $request->session()->get("telefono");
+        $direccionOficiona = $request->session()->get("direccionOficiona");
+        $telefonoOficina = $request->session()->get("telefonoOficina");
+        $direccionDeMayorContacto = $request->session()->get("direccionDeMayorContacto");
+        $direccionVisita = $request->session()->get("direccionVisita");
+
+        $generals = General::orderBy('id', 'desc')
+                            ->limit(1)
+                            ->get();
+
+        foreach ($generals as $general) {
+            $general_id = $general->id;
+        }
+
+        $create_client = new Client;
+        $create_client->name_lastname = $nombresApellidos;
+        $create_client->identification_document = $documentoIdentificacion;
+        $create_client->email = $correo;
+        $create_client->cell_phone = $celular;
+        $create_client->residence_address = $direccion;
+        $create_client->residence_phone = $telefono;
+        $create_client->business_address = $direccionOficiona;
+        $create_client->office_phone = $telefonoOficina;
+        $create_client->most_contact_address = $direccionDeMayorContacto;
+        $create_client->address_of_visit = $direccionVisita;
+        $create_client->general_id = $general_id;
+        $create_client->save();
+
+        $referencia = $request->session()->get("referencia");
+        $nombresApellidosReferencia = $request->session()->get("nombresApellidosReferencia");
+        $telefonoReferencia = $request->session()->get("telefonoReferencia");
+
+        $clients = Client::orderBy('id', 'desc')
+                            ->limit(1)
+                            ->get();
+
+        foreach ($clients as $client) {
+            $client_id = $client->id;
+        }
+
+        $create_reference = new Reference;
+        $create_reference->reference = $referencia;
+        $create_reference->name_lastname_reference = $nombresApellidosReferencia;
+        $create_reference->reference_phone = $telefonoReferencia;
+        $create_reference->client_id = $client_id;
+        $create_reference->save();
+
+        $codigoGarantia = $request->session()->get("codigoGarantia");
+        $nombresApellidosAvalista = $request->session()->get("nombresApellidosAvalista");
+        $telefonoAvalista = $request->session()->get("telefonoAvalista");
+        $ocupacion = $request->session()->get("ocupacion");
+        $observacion = $request->session()->get("observacion");
+
+        $references = Reference::orderBy('id', 'desc')
+                            ->limit(1)
+                            ->get();
+
+        foreach ($references as $reference) {
+            $reference_id = $reference->id;
+        }
+
+        $create_guarantor = new Guarantor;
+        $create_guarantor->guarantee_code = $codigoGarantia;
+        $create_guarantor->name_lastname_guarantee = $nombresApellidosAvalista;
+        $create_guarantor->guarantee_phone = $telefonoAvalista;
+        $create_guarantor->ocupation = $ocupacion;
+        $create_guarantor->observation = $observacion;
+        $create_guarantor->reference_id = $reference_id;
+        $create_guarantor->save();
+
+        $contactaTitular = $request->session()->get("contactaTitular");
+        $noContactaTitular = $request->session()->get("noContactaTitular");
+        $nombresApellidosVisita = $request->session()->get("nombresApellidosVisita");
+        $parentesco = $request->session()->get("parentesco");
+        $actividadEconomica = $request->session()->get("actividadEconomica");
+        $noPago = $request->session()->get("noPago");
+        $observacionesNoPago = $request->session()->get("observacionesNoPago");
+
+        $guarantors = Guarantor::orderBy('id', 'desc')
+                            ->limit(1)
+                            ->get();
+
+        foreach ($guarantors as $guarantor) {
+            $guarantor_id = $guarantor->id;
+        }
+
+        $create_visit = new Visit;
+        $create_visit->contact_owner = $contactaTitular;
+        $create_visit->no_Contact_owner = $noContactaTitular;
+        $create_visit->name_lastname_visit = $nombresApellidosVisita;
+        $create_visit->relationship = $parentesco;
+        $create_visit->economic_activity = $actividadEconomica;
+        $create_visit->reason_not_payment = $noPago;
+        $create_visit->observations_not_payment = $observacionesNoPago;
+        $create_visit->guarantor_id = $guarantor_id;
+        $create_visit->save();
+
+        $acuerdo = $request->session()->get("acuerdo");
+        $nDeProducto = $request->session()->get("nDeProducto");
+        $fechaCompromiso = $request->session()->get("fechaCompromiso");
+        $vrPromesa = $request->session()->get("vrPromesa");
+        $alternativa = $request->session()->get("alternativa");
+
+        $visits = Visit::orderBy('id', 'desc')
+                            ->limit(1)
+                            ->get();
+
+        foreach ($visits as $visit) {
+            $visit_id = $visit->id;
+        }
+
+        $create_agreement = new Agreement;
+        $create_agreement->payment_agreement = $acuerdo;
+        $create_agreement->product = $nDeProducto;
+        $create_agreement->commitment_date = $fechaCompromiso;
+        $create_agreement->promise_value = $vrPromesa;
+        $create_agreement->alternative = $alternativa;
+        $create_agreement->visit_id = $visit_id;
+        $create_agreement->save();
+
+        $comentario = $request->session()->get("comentario");
+        $efectoVisita = $request->session()->get("efectoVisita");
+        $motivo = $request->session()->get("motivo");
+        $otroMotivo = $request->session()->get("otroMotivo");
+        $direccionInexistente = $request->session()->get("direccionInexistente");
+        $subrogacion = $request->session()->get("subrogacion");
+        $tipoContacto = $request->session()->get("tipoContacto");
+
+        $agreements = Agreement::orderBy('id', 'desc')
+                            ->limit(1)
+                            ->get();
+
+        foreach ($agreements as $agreement) {
+            $agreement_id = $agreement->id;
+        }
+
+        $create_commentary = new Commentary;
+        $create_commentary->commentary = $comentario;
+        $create_commentary->visit_effect = $efectoVisita;
+        $create_commentary->inaccessible_place = $motivo;
+        $create_commentary->another_reason = $otroMotivo;
+        $create_commentary->non_existent_address = $direccionInexistente;
+        $create_commentary->Subrogation = $subrogacion;
+        $create_commentary->type_of_contact = $tipoContacto;
+        $create_commentary->agreement_id = $agreement_id;
+        $create_commentary->save();
+
+        $firma = $request->session()->get("firma");
+
+        $commentaries = Commentary::orderBy('id', 'desc')
+                            ->limit(1)
+                            ->get();
+
+        foreach ($commentaries as $commentary) {
+            $commentary_id = $commentary->id;
+        }
+
+        $create_firm = new Firm;
+        $create_firm->firm = $firma;
+        $create_firm->commentary_id = $commentary_id;
+        $create_firm->save();
+
+        $lat = $request->session()->get("lat");
+        $lng = $request->session()->get("lng");
+
+        $firms = Firm::orderBy('id', 'desc')
+                            ->limit(1)
+                            ->get();
+
+        foreach ($firms as $firm) {
+            $firm_id = $firm->id;
+        }
+
+        $create_localitation = new Localitation;
+        $create_localitation->breite = $lat;
+        $create_localitation->Lange = $lng;
+        $create_localitation->firm_id = $firm_id;
+        $create_localitation->save();
 
         return Response::json(array('html' => 'ok'));
     }

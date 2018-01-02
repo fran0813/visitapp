@@ -31,6 +31,7 @@ Route::group(['prefix' => 'admin'], function()
 	Route::get('/resultadoVisita', 'AdminController@resultadoVisita')->middleware('auth');
 	Route::get('/acuerdoPago', 'AdminController@acuerdoPago')->middleware('auth');
 	Route::get('/comentarioVisita', 'AdminController@comentarioVisita')->middleware('auth');
+	Route::get('/firma', 'AdminController@firma')->middleware('auth');
 
 	// Guarda la información
 	Route::post('/informacionAgenciaAlmacenar', 'AdminController@informacionAgenciaAlmacenar')->middleware('auth');
@@ -71,9 +72,11 @@ Route::group(['prefix' => 'admin'], function()
 	Route::post('/validarResultadoVisita', 'AdminController@validarResultadoVisita')->middleware('auth');
 	Route::post('/validarAcuerdoPago', 'AdminController@validarAcuerdoPago')->middleware('auth');
 	Route::post('/validarComentarioVisita', 'AdminController@validarComentarioVisita')->middleware('auth');
+	Route::post('/validarFirma', 'AdminController@validarFirma')->middleware('auth');
 
-	// Guarda la información
+	// Otros
 	Route::post('/boton', 'AdminController@boton')->middleware('auth');
+	Route::post('/coordenadas', 'AdminController@coordenadas')->middleware('auth');
 	Route::post('/guardar', 'AdminController@guardar')->middleware('auth');
 });
 
