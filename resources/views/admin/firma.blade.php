@@ -19,13 +19,14 @@
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
-    <body onload="comenzar();">
+    <body onload="startup();">
 
         {{-- @include('layouts.section.navbar') --}}
 
         <p id="siguiente" style="display: none; margin-left: 15%;"></p>
         <form id="formFirma">
-            <canvas id="canvas" width="600" height="500" style="border: 1px solid  #000; box-shadow: 2px 2px 10px #333;"></canvas>  
+            <canvas id="canvas" width="600" height="500" style="border: 1px solid  #000; box-shadow: 2px 2px 10px #333;"></canvas>
+            {{-- Log: <pre id="log" style="border: 1px solid #ccc;"></pre> --}}
             <div class="text-center" style="margin-top: 2%; margin-bottom: 5%;">                
                 <button type="submit" class="btn btn-success">Guardar</button>
                 <button class="btn btn-info">Volver</button>

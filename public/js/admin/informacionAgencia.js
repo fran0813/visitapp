@@ -109,9 +109,9 @@ function initMap() {
 		          draggable: true
 		    }); 
 
-		    google.maps.event.addListener(marker, "dragend", function() { 
-		    	getCoords(marker); 
-		    }); 
+		    // google.maps.event.addListener(marker, "dragend", function() { 
+		    // 	getCoords(marker); 
+		    // }); 
 
 		    map.addListener('center_changed', function() {
 			    // 3 seconds after the center of the map has changed, pan back to the
@@ -126,11 +126,11 @@ function initMap() {
 			    map.setCenter(marker.getPosition());
 			});
 
-			infoWindow.setPosition(pos);
-			infoWindow.setContent('Localización encontrada, por favor cierre el aviso y elija el lugar');
+			// infoWindow.setPosition(pos);
+			// infoWindow.setContent('Localización encontrada, por favor cierre el aviso y elija el lugar');
 			map.setCenter(pos);
 			marker.setMap(map);
-			getCoords(marker); 
+			// getCoords(marker); 
 		}, function() {
 			handleLocationError(true, infoWindow, map.getCenter());
 		});
@@ -147,11 +147,11 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 	                      'Error: Your browser doesn\'t support geolocation.');
 }
 
-function getCoords(marker){ 
-	var lat = marker.getPosition().lat(); 
-	var lng = marker.getPosition().lng(); 
-    coordenadas(lat,lng)
-} 
+// function getCoords(marker){ 
+// 	var lat = marker.getPosition().lat(); 
+// 	var lng = marker.getPosition().lng(); 
+//     coordenadas(lat,lng)
+// } 
 
 function coordenadas(lat,lng)
 {
