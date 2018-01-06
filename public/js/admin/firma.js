@@ -3,37 +3,15 @@ $(document).ready(function()
 	verificar();
 });
 
-$("#formComentarioVisita").on("submit", function()
+$("#formFirma").on("submit", function()
 {
-	// var comentario = $("#comentario").val();
-	// var efectoVisita = $('input:radio[name=efectoVisita]:checked').val();
-	// var motivo = $('input:radio[name=motivo]:checked').val();
-	// if (motivo == "otro") {
-	// 	var otroMotivo = $("#otroMotivo").val();
-	// } else {
-	// 	var otroMotivo = null;
-	// }
-	// var direccionInexistente = $('input:radio[name=direccionInexistente]:checked').val();
-	// var subrogacion = $('input:radio[name=subrogacion]:checked').val();
-	// var tipoContacto = $('input:radio[name=tipoContacto]:checked').val();
-
-	// $.ajax({
-	// 	headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-	// 	method: "POST",
-	// 	url: "/admin/comentarioVisitaAlmacenar",
-	// 	dataType: 'json',
-	// 	data: { comentario: comentario,
-	// 			efectoVisita: efectoVisita,
-	// 			motivo: motivo,
-	// 			otroMotivo: otroMotivo,
-	// 			direccionInexistente: direccionInexistente,
-	// 			subrogacion: subrogacion,
-	// 			tipoContacto: tipoContacto }
-	// })
-
-	// .done(function(response){
-	// 	continuar();
-	// });
+  var canvas = document.getElementById('canvas');
+  var dato = canvas.toDataURL("image/png");
+  dato = dato.replace("image/png", "image/octet-stream");
+  document.location.href = dato;
+  	
+  $("#formFirma").hide();
+  $("#firma").show();
 
 	return false;
 });
@@ -57,23 +35,6 @@ function verificar()
 	});
 }
 
-function continuar()
-{
-	// var siguienteComentarioVisita = true;
-
-	// $.ajax({
-	// 	headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-	// 	method: "POST",
-	// 	url: "/admin/comentarioVisitaContinuar",
-	// 	dataType: 'json',
-	// 	data: { siguienteComentarioVisita: siguienteComentarioVisita }
-	// })
-
-	// .done(function(response){
-	// 	document.location ="/admin/";
-	// });
-}
-
 function boton()
 {
 	$.ajax({
@@ -90,6 +51,7 @@ function boton()
 	});
 }
 
+estoyDibujando = false;
 var ongoingTouches = [];
 
 function startup(){
@@ -102,7 +64,7 @@ function startup(){
 
 function handleStart(evt) {
   evt.preventDefault();
-  log("touchstart.");
+  // log("touchstart.");
   var el = document.getElementsByTagName("canvas")[0];
   var ctx = el.getContext("2d");
   var touches = evt.changedTouches;
@@ -112,7 +74,7 @@ function handleStart(evt) {
     ongoingTouches.push(copyTouch(touches[i]));
     var color = colorForTouch(touches[i]);
     ctx.beginPath();
-    ctx.arc(touches[i].pageX, touches[i].pageY, 4, 0, 2 * Math.PI, false);  // a circle at the start
+    // ctx.arc(touches[i].pageX, touches[i].pageY, 4, 0, 2 * Math.PI, false);  // a circle at the start
     ctx.fillStyle = color;
     ctx.fill();
     log("touchstart:" + i + ".");
@@ -130,11 +92,11 @@ function handleMove(evt) {
     var idx = ongoingTouchIndexById(touches[i].identifier);
 
     if (idx >= 0) {
-      log("continuing touch "+idx);
+      // log("continuing touch "+idx);
       ctx.beginPath();
-      log("ctx.moveTo(" + ongoingTouches[idx].pageX + ", " + ongoingTouches[idx].pageY + ");");
+      // log("ctx.moveTo(" + ongoingTouches[idx].pageX + ", " + ongoingTouches[idx].pageY + ");");
       ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
-      log("ctx.lineTo(" + touches[i].pageX + ", " + touches[i].pageY + ");");
+      // log("ctx.lineTo(" + touches[i].pageX + ", " + touches[i].pageY + ");");
       ctx.lineTo(touches[i].pageX, touches[i].pageY);
       ctx.lineWidth = 4;
       ctx.strokeStyle = color;
@@ -143,14 +105,14 @@ function handleMove(evt) {
       ongoingTouches.splice(idx, 1, copyTouch(touches[i]));  // swap in the new touch record
       log(".");
     } else {
-      log("can't figure out which touch to continue");
+      // log("can't figure out which touch to continue");
     }
   }
 }
 
 function handleEnd(evt) {
   evt.preventDefault();
-  log("touchend");
+  // log("touchend");
   var el = document.getElementsByTagName("canvas")[0];
   var ctx = el.getContext("2d");
   var touches = evt.changedTouches;
@@ -165,17 +127,17 @@ function handleEnd(evt) {
       ctx.beginPath();
       ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
       ctx.lineTo(touches[i].pageX, touches[i].pageY);
-      ctx.fillRect(touches[i].pageX - 4, touches[i].pageY - 4, 8, 8);  // and a square at the end
+      // ctx.fillRect(touches[i].pageX - 4, touches[i].pageY - 4, 8, 8);  // and a square at the end
       ongoingTouches.splice(idx, 1);  // remove it; we're done
     } else {
-      log("can't figure out which touch to end");
+      // log("can't figure out which touch to end");
     }
   }
 }
 
 function handleCancel(evt) {
   evt.preventDefault();
-  log("touchcancel.");
+  // log("touchcancel.");
   var touches = evt.changedTouches;
   
   for (var i = 0; i < touches.length; i++) {
@@ -207,7 +169,7 @@ function colorForTouch(touch) {
   g = g.toString(16); // make it a hex digit
   b = b.toString(16); // make it a hex digit
   var color = "#" + r + g + b;
-  log("color for touch with identifier " + touch.identifier + " = " + color);
+  // log("color for touch with identifier " + touch.identifier + " = " + color);
   return color;
 }
 
@@ -215,3 +177,51 @@ function log(msg) {
   // var p = document.getElementById('log');
   // p.innerHTML = msg + "\n" + p.innerHTML;
 }
+
+function comenzar(){
+     lienzo = document.getElementById('canvas');
+     ctx = lienzo.getContext('2d');
+//Dejamos todo preparado para escuchar los eventos
+     document.addEventListener('mousedown',pulsaRaton,false);
+     document.addEventListener('mousemove',mueveRaton,false);
+     document.addEventListener('mouseup',levantaRaton,false);
+}
+
+function pulsaRaton(capturo){
+     estoyDibujando = true;
+//Indico que vamos a dibujar
+     ctx.beginPath();
+//Averiguo las coordenadas X e Y por dónde va pasando el ratón
+     ctx.moveTo(capturo.clientX,capturo.clientY);
+}
+
+function mueveRaton(capturo){
+     if(estoyDibujando){
+//indicamos el color de la línea
+		ctx.lineWidth = 4;
+        ctx.strokeStyle='#000';
+//Por dónde vamos dibujando
+        ctx.lineTo(capturo.clientX,capturo.clientY);
+        ctx.stroke();
+     }
+}
+
+function levantaRaton(capturo){
+//Indico que termino el dibujo
+     ctx.closePath();
+     estoyDibujando = false;
+}
+
+function volver()
+{
+	document.location ="/admin/comentarioVisita";
+}
+
+function borrar()
+{
+	var canvas = document.getElementById('canvas');
+  	var ctx = canvas.getContext("2d");
+
+  	ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+

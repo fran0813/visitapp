@@ -4,7 +4,7 @@
 
     @section('brand')
         <a class="navbar-brand" href="{{ url('/admin/acuerdoPago') }}" style="height: 40%;">
-            Acuerdo de Pago
+            Acuerdo de pago
         </a>
     @endsection
 

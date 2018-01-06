@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Storage;
+use File;
 use \Response;
 use App\Agency;
 use App\General;
@@ -69,6 +71,11 @@ class AdminController extends Controller
         return view('admin.firma');
     }
 
+    public function subiendo()
+    {
+        return view('admin.subiendo');
+    }
+
     public function boton(Request $request)
     {
         $html = "";
@@ -81,6 +88,7 @@ class AdminController extends Controller
         $siguienteResultadoVisita = null;
         $siguienteAcuerdoPago = null;
         $siguienteComentarioVisita = null;
+        $firma = null;
 
         if($request->session()->get("siguienteInformacionAgencia")){
             $siguienteInformacionAgencia = $request->session()->get("siguienteInformacionAgencia");
@@ -114,6 +122,10 @@ class AdminController extends Controller
             $siguienteComentarioVisita = $request->session()->get("siguienteComentarioVisita");
         }
 
+        if($request->session()->get("siguienteFirma")){
+            $siguienteFirma = $request->session()->get("siguienteFirma");
+        }
+
         if ($siguienteInformacionAgencia == null) {
             $html = "<a href='/admin/informacionAgencia' class='btn btn-info'>Regresar</a>";
         } elseif ($siguienteInformacionGeneral == null) {
@@ -130,6 +142,8 @@ class AdminController extends Controller
             $html = "<a href='/admin/acuerdoPago' class='btn btn-info'>Regresar</a>";
         } elseif ($siguienteComentarioVisita == null) {
             $html = "<a href='/admin/comentarioVisita' class='btn btn-info'>Regresar</a>";
+        } elseif ($siguienteFirma == null) {
+            $html = "<a href='/admin/firma' class='btn btn-info'>Regresar</a>";
         }
 
         return Response::json(array('html' => $html));
@@ -766,6 +780,52 @@ class AdminController extends Controller
         $request->session()->put('lng', $lng);
 
         return Response::json(array('html' => 'ok'));
+    }
+
+    public function firmaAlmacenar(Request $request)
+    {
+        $boolean = False;
+
+        $agencies = Agency::orderBy('id', 'desc')
+                            ->limit(1)
+                            ->get();
+        foreach ($agencies as $agency) {
+            $id = $agency->id;
+            $boolean = True;
+        }
+
+        if ($boolean == False) {
+            $id = 1;
+        } else {
+            $id = $id + 1;
+        }
+
+        $file = $request->file('file');
+        $name = $file->getClientOriginalName();
+        Storage::disk('public2')->put($id.$name,  File::get($file));
+
+        $firma = "public/img/firmas/".$id.$name;
+
+        $request->session()->put('firma', $firma);
+
+        $siguienteFirma = null;
+
+        if($request->session()->get("siguienteFirma")){
+            $siguienteFirma = $request->session()->get("siguienteFirma");
+        }
+
+        return redirect('/admin/subiendo');
+    }
+
+    public function validarTodo(Request $request)
+    {
+        $siguienteFirma = null;
+
+        if($request->session()->get("siguienteFirma")){
+            $siguienteFirma = $request->session()->get("siguienteFirma");
+        }
+
+        return Response::json(array('siguienteFirma' => $siguienteFirma));
     }
 
     public function guardar(Request $request)

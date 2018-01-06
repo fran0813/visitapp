@@ -19,20 +19,27 @@
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
-    <body onload="startup();">
-
-        {{-- @include('layouts.section.navbar') --}}
+    <body onload="startup();comenzar();">
 
         <p id="siguiente" style="display: none; margin-left: 15%;"></p>
         <form id="formFirma">
             <canvas id="canvas" width="600" height="500" style="border: 1px solid  #000; box-shadow: 2px 2px 10px #333;"></canvas>
-            {{-- Log: <pre id="log" style="border: 1px solid #ccc;"></pre> --}}
             <div class="text-center" style="margin-top: 2%; margin-bottom: 5%;">                
                 <button type="submit" class="btn btn-success">Guardar</button>
-                <button class="btn btn-info">Volver</button>
-                <button class="btn btn-danger">Borrar</button>
-            </div> 
+                <button class="btn btn-info" onclick="volver();">Volver</button>
+                <button class="btn btn-danger" onclick="borrar();">Borrar</button>
+            </div>
+            <img src="" id="fileImg" style="display: none;">
         </form>
+
+        <div class="text-center" style="margin-top: 10%">
+            <form id="firma" method="POST" action='/admin/firmaAlmacenar' enctype="multipart/form-data" style="display: none;">
+                <label for="#">Por favor ingrese el archivo</label>
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <input type="file" name="file" class="form-control-file center-block">
+                <button type="submit" class="btn btn-success">Guardar</button>
+            </form>
+        </div> 
 
         <!-- jQuery -->
         <script src="{{ asset('jquery/jquery.min.js') }}"></script>
