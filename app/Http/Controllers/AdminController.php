@@ -801,10 +801,10 @@ class AdminController extends Controller
         }
 
         $file = $request->file('file');
-        $name = $file->getClientOriginalName();
-        Storage::disk('public2')->put($id.$name,  File::get($file));
+        $name = "Firma";
+        Storage::disk('public2')->put($id.$name.".png",  File::get($file));
 
-        $firma = "public/img/firmas/".$id.$name;
+        $firma = "public/img/firmas/".$id.$name.".png";
 
         $request->session()->put('firma', $firma);
 
@@ -1067,6 +1067,8 @@ class AdminController extends Controller
         $create_localitation->Lange = $lng;
         $create_localitation->firm_id = $firm_id;
         $create_localitation->save();
+
+        $request->session()->flush();
 
         return Response::json(array('html' => 'ok'));
     }

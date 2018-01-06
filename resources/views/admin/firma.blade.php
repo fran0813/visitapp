@@ -29,7 +29,6 @@
                 <button class="btn btn-info" onclick="volver();">Volver</button>
                 <button class="btn btn-danger" onclick="borrar();">Borrar</button>
             </div>
-            <img src="" id="fileImg" style="display: none;">
         </form>
 
         <div class="text-center" style="margin-top: 10%">
