@@ -19,7 +19,7 @@ $("#formResultadoVisita").on("submit", function()
 	var noPago = $("#noPago").val();
 	var observacionesNoPago = $("#observacionesNoPago").val();
 
-	if (noContactaTitular == null) {
+	if (noContactaTitular == null && contactaTitular == "no") {
 		$("#siguiente").show();
 		$("#siguiente").html("No se ha ingresado la informacion del no contacto con el titular");
 	} else {

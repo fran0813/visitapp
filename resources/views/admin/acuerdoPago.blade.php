@@ -29,7 +29,7 @@
                         <label class="control-label" for="fechaCompromiso">Fecha de compromiso</label>
                         <input type="date" class="form-control" id="fechaCompromiso">
                         <label class="control-label" for="vrPromesa">Valor promesa</label>
-                        <input type="text" class="form-control" id="vrPromesa" placeholder="Ingrese el vr promesa" pattern="[0-9]+">
+                        <input type="number" class="form-control" id="vrPromesa" placeholder="Ingrese el vr promesa" pattern="[0-9]+">
                         <label class="control-label" for="alternativa">Alternativas</label>
                         <textarea id="alternativa" class="form-control" rows="3" style="resize: none;" placeholder="Ingrese las alternativas"></textarea>
                     </div>

@@ -21,11 +21,11 @@
     </head>
     <body onload="startup();comenzar();">
 
-        <p id="siguiente" style="display: none; margin-left: 15%;"></p>
-        <form id="formFirma">
+        <p id="siguiente" style="display: none; margin-left: 15%;" class="text-center"></p>
+        <form id="formFirma" style="display: none;">
             <canvas id="canvas" width="600" height="500" style="border: 1px solid  #000; box-shadow: 2px 2px 10px #333;"></canvas>
             <div class="text-center" style="margin-top: 2%; margin-bottom: 5%;">                
-                <button type="submit" class="btn btn-success">Guardar</button>
+                <button class="btn btn-success" onclick="guardar();">Guardar</button>
                 <button class="btn btn-info" onclick="volver();">Volver</button>
                 <button class="btn btn-danger" onclick="borrar();">Borrar</button>
             </div>
@@ -36,7 +36,7 @@
                 <label for="#">Por favor ingrese el archivo</label>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <input type="file" name="file" class="form-control-file center-block">
-                <button type="submit" class="btn btn-success">Guardar</button>
+                <button type="submit" class="btn btn-success" style="margin-top: 1%; margin-bottom: 5%;">Guardar</button>
             </form>
         </div> 
 

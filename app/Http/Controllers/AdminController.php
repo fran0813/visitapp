@@ -88,7 +88,7 @@ class AdminController extends Controller
         $siguienteResultadoVisita = null;
         $siguienteAcuerdoPago = null;
         $siguienteComentarioVisita = null;
-        $firma = null;
+        $siguienteFirma = null;
 
         if($request->session()->get("siguienteInformacionAgencia")){
             $siguienteInformacionAgencia = $request->session()->get("siguienteInformacionAgencia");
@@ -808,11 +808,9 @@ class AdminController extends Controller
 
         $request->session()->put('firma', $firma);
 
-        $siguienteFirma = null;
+        $siguienteFirma = "true";
 
-        if($request->session()->get("siguienteFirma")){
-            $siguienteFirma = $request->session()->get("siguienteFirma");
-        }
+        $request->session()->put('siguienteFirma', $siguienteFirma);
 
         return redirect('/admin/subiendo');
     }
@@ -977,6 +975,9 @@ class AdminController extends Controller
 
         $create_visit = new Visit;
         $create_visit->contact_owner = $contactaTitular;
+        if ($noContactaTitular == "") {
+            $noContactaTitular = null;
+        }
         $create_visit->no_Contact_owner = $noContactaTitular;
         $create_visit->name_lastname_visit = $nombresApellidosVisita;
         $create_visit->relationship = $parentesco;
@@ -1068,8 +1069,92 @@ class AdminController extends Controller
         $create_localitation->firm_id = $firm_id;
         $create_localitation->save();
 
-        $request->session()->flush();
+        $request->session()->forget('nombreDeLaAgencia');
+        $request->session()->forget('franja');
+        $request->session()->forget('fecha');
+        $request->session()->forget('ciudad');
 
-        return Response::json(array('html' => 'ok'));
+        $request->session()->forget('codAlivio');
+        $request->session()->forget('obligacionN');
+        $request->session()->forget('fechaDeDesembolso');
+        $request->session()->forget('saldoCapital');
+        $request->session()->forget('saldoTotal');
+        $request->session()->forget('diasMora');
+        $request->session()->forget('VrIntMora');
+        $request->session()->forget('VrIntCorrientes');
+        $request->session()->forget('VrSeguros');
+        $request->session()->forget('VrGac');
+        $request->session()->forget('calificacion');
+        $request->session()->forget('etapaSapro');
+        $request->session()->forget('invBienesINIC');
+        $request->session()->forget('embargo');
+
+        $request->session()->forget('nombresApellidos');
+        $request->session()->forget('documentoIdentificacion');
+        $request->session()->forget('correo');
+        $request->session()->forget('celular');
+        $request->session()->forget('direccion');
+        $request->session()->forget('telefono');
+        $request->session()->forget('direccionOficiona');
+        $request->session()->forget('telefonoOficina');
+        $request->session()->forget('direccionDeMayorContacto');
+        $request->session()->forget('direccionVisita');
+
+        $request->session()->forget('referencia');
+        $request->session()->forget('nombresApellidosReferencia');
+        $request->session()->forget('telefonoReferencia');
+
+        $request->session()->forget('codigoGarantia');
+        $request->session()->forget('nombresApellidosAvalista');
+        $request->session()->forget('telefonoAvalista');
+        $request->session()->forget('ocupacion');
+        $request->session()->forget('observacion');
+
+        $request->session()->forget('contactaTitular');
+        $request->session()->forget('noContactaTitular');
+        $request->session()->forget('nombresApellidosVisita');
+        $request->session()->forget('parentesco');
+        $request->session()->forget('actividadEconomica');
+        $request->session()->forget('noPago');
+        $request->session()->forget('observacionesNoPago');
+
+        $request->session()->forget('acuerdo');
+        $request->session()->forget('nDeProducto');
+        $request->session()->forget('fechaCompromiso');
+        $request->session()->forget('vrPromesa');
+        $request->session()->forget('alternativa');
+
+        $request->session()->forget('comentario');
+        $request->session()->forget('efectoVisita');
+        $request->session()->forget('motivo');
+        $request->session()->forget('otroMotivo');
+        $request->session()->forget('direccionInexistente');
+        $request->session()->forget('subrogacion');
+        $request->session()->forget('tipoContacto');
+
+        $request->session()->forget('lat');
+        $request->session()->forget('lng');
+
+        $request->session()->forget('firma');
+
+        $request->session()->forget("siguienteInformacionAgencia");
+        
+        $request->session()->forget("siguienteInformacionGeneral");
+        
+        $request->session()->forget("siguienteInformacionCliente");
+        
+        $request->session()->forget("siguienteInformacionReferencia");
+        
+        $request->session()->forget("siguienteInformacionAvalista");
+        
+        $request->session()->forget("siguienteResultadoVisita");
+        
+        $request->session()->forget("siguienteAcuerdoPago");
+        
+        $request->session()->forget("siguienteComentarioVisita");
+        
+        $request->session()->forget("siguienteFirma");
+        
+        return Response::json(array('html' => "ok"));
     }
 }

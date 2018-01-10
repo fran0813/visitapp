@@ -5,7 +5,7 @@ $(document).ready(function()
 
 $("#otro").on("submit", function()
 {
-  document.location ="/admin/informacionAgencia";
+  	document.location ="/admin/informacionAgencia";
 
 	return false;
 });
@@ -15,14 +15,14 @@ function verificar()
 	$.ajax({
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 		method: "POST",
-		url: "/admin/validarFirma",
+		url: "/admin/validarTodo",
 		dataType: 'json',
 		data: {  }
 	})
 
 	.done(function(response){
-		if (response.siguienteFirma != "true") {
-      subir();
+		if (response.siguienteFirma == "true") {
+			subir();
 		} else {
 			boton();
 		}
@@ -53,18 +53,19 @@ function subir()
   $('#loader').fadeIn(1000);
   document.body.style.cursor = "wait";
 
-  // $.ajax({
-  //   headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-  //   method: "POST",
-  //   url: "/admin/guardar",
-  //   dataType: 'json',
-  //   data: {  }
-  // })
+  $.ajax({
+    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+    method: "POST",
+    url: "/admin/guardar",
+    dataType: 'json',
+    data: {  }
+  })
 
-  // .done(function(response){
+  .done(function(response){
+  	console.info(response);
     $('#modalCargar').modal('hide').fadeOut(1000);
     $('#loader').fadeOut(1000);
     $("#otro").show();
     document.body.style.cursor = "auto";
-  // });
+  });
 }

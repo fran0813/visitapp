@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Commentary extends Model
 {
-    protected $table = "comentaries";
+    protected $table = "commentaries";
 
     protected $fillable = [
     	'commentary', 'visit_effect', 'inaccessible_place', 'another_reason', 'non_existent_address', 'Subrogation', 'type_of_contact', 'agreement_id',

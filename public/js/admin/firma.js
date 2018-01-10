@@ -5,16 +5,22 @@ $(document).ready(function()
 
 $("#formFirma").on("submit", function()
 {
+  
+	return false;
+});
+
+function guardar()
+{
   var canvas = document.getElementById('canvas');
   var dato = canvas.toDataURL("image/png");
   dato = dato.replace("image/png", "image/octet-stream");
   document.location.href = dato;
-  	
+    
   $("#formFirma").hide();
   $("#firma").show();
 
-	return false;
-});
+  return false;
+};
 
 function verificar()
 {
@@ -27,7 +33,7 @@ function verificar()
 	})
 
 	.done(function(response){
-		if (response.siguienteAcuerdoPago != "true") {
+		if (response.siguienteComentarioVisita == "true") {
 			$("#formFirma").show();
 		} else {
 			boton();
@@ -47,7 +53,9 @@ function boton()
 
 	.done(function(response){
 		$("#siguiente").show();
-		$("#siguiente").html("No se ha ingresado la información del paso anterior"+ "<br>"+ response.html);
+    $("#siguiente").html("No se ha ingresado la información del paso anterior"+ "<br>"+ response.html);
+    $("#siguiente").css("margin-left", "")
+		$("#siguiente").css("margin-top", "10%")
 	});
 }
 
@@ -55,11 +63,11 @@ estoyDibujando = false;
 var ongoingTouches = [];
 
 function startup(){
-    var el = document.getElementsByTagName("canvas")[0];
-	el.addEventListener("touchstart", handleStart, false);
-	el.addEventListener("touchend", handleEnd, false);
-	el.addEventListener("touchcancel", handleCancel, false);
-	el.addEventListener("touchmove", handleMove, false);
+  var el = document.getElementsByTagName("canvas")[0];
+  el.addEventListener("touchstart", handleStart, false);
+  el.addEventListener("touchend", handleEnd, false);
+  el.addEventListener("touchcancel", handleCancel, false);
+  el.addEventListener("touchmove", handleMove, false);
 }
 
 function handleStart(evt) {
@@ -220,8 +228,8 @@ function volver()
 function borrar()
 {
 	var canvas = document.getElementById('canvas');
-  	var ctx = canvas.getContext("2d");
+  var ctx = canvas.getContext("2d");
 
-  	ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 

@@ -82,6 +82,7 @@ function verificarInformacion()
 	.done(function(response){
 		if (response.acuerdo == "si") {
 			$('#si').prop("checked", true);
+			$("#acuerdo").show();
 		} else if (response.acuerdo == "no") {
 			$('#no').prop("checked", true);
 		}
@@ -141,6 +142,10 @@ $("#formAcuerdoPago").on("click", 'input[type="radio"]', function()
 		fecha();
 	} else if (acuerdo == "no") {
 		$("#acuerdo").hide();
+		$("#nDeProducto").val("");
+		$("#fechaCompromiso").val("");
+		$("#vrPromesa").val("");
+		$("#alternativa").val("");
 	}
 });
 

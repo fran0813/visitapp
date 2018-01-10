@@ -15,7 +15,7 @@
                 <p id="siguiente" style="display: none;"></p>
                 <form id="formComentarioVisita" style="display: none; margin-left: 15%; margin-right: 15%;">
                     <label class="control-label" for="comentario">Comentario de la visita o descripción del inmueble</label>
-                    <textarea id="comentario" class="form-control" rows="3" style="resize: none;" placeholder="Ingrese el comentario de la visita o descripción del inmueble"></textarea>
+                    <textarea id="comentario" class="form-control" rows="3" style="resize: none;" placeholder="Ingrese el comentario de la visita o descripción del inmueble" required></textarea>
                     <h4 style="color: #383838">Efecto de la visita</h4>
                     <label class="control-label" for="noViveTrabaja">No vive / No trabaja</label>                
                     <input type="radio" id="noViveTrabaja" name="efectoVisita" value="noViveTrabaja" required>
